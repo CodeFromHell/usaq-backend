@@ -1,0 +1,41 @@
+{
+    "name": "codefromhell/usaq-backend",
+    "description": "Slim Framework 3 .",
+    "license": "MIT",
+    "type": "project",
+    "keywords": ["slim-framework", "doctrine"],
+    "authors": [
+        {
+            "name": "Ramón Corchero",
+            "email": "rjcorflo@gmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "USaq\\": "src"
+        }
+    },
+    "require": {
+        "php": ">7.1",
+        "slim/slim": "^3.0",
+        "php-di/slim-bridge": "^1.0",
+        "monolog/monolog": "^1.13",
+        "symfony/event-dispatcher": "*",
+        "league/fractal": "*",
+        "respect/validation": "^1.0",
+        "doctrine/orm": "^2.5",
+        "vlucas/phpdotenv": "^2.4"
+
+    },
+    "require-dev": {
+        "codeception/codeception": "^2.0",
+        "anahkiasen/rocketeer": "^2.2"
+    },
+    "config": {
+        "process-timeout": 0
+    },
+    "scripts": {
+        "serve": "php -S 0.0.0.0:8000 -t public public/index.php",
+        "test": "codeception run"
+    }
+}
