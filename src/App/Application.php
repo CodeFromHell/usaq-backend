@@ -4,6 +4,8 @@ namespace USaq\App;
 
 use DI\Bridge\Slim\App;
 use DI\ContainerBuilder;
+use Dotenv\Dotenv;
+use Dotenv\Exception\InvalidPathException;
 
 class Application extends App
 {
@@ -11,13 +13,29 @@ class Application extends App
     {
         parent::__construct();
 
-        $this->bootstrap();
+        $this->initialize();
     }
+
+    public static function bootstrap()
+    {
+        require_once __DIR__ . '/../../vendor/autoload.php';
+
+        try {
+            $dotEnv = new Dotenv(__DIR__ . '/../../');
+            $dotEnv->load();
+        } catch (InvalidPathException $e) {
+            //
+        }
+
+        // Return instantiated the app
+        return new self();
+    }
+
 
     /**
      * Initialize application.
      */
-    protected function bootstrap()
+    protected function initialize()
     {
         MiddlewareInitializer::initialize($this);
         RoutesInitializer::initialize($this);
@@ -34,11 +52,11 @@ class Application extends App
         $builder->addDefinitions(__DIR__ . "/../../config/configuration.php");
 
         /* DIC default definitions */
-        $builder->addDefinitions(__DIR__ . "/DependencyInjection/definitions/di-definition.php");
+        $builder->addDefinitions(__DIR__ . "/DependencyInjection/di-definition.php");
 
         $environment = getenv('APP_ENV');
         if ($environment) {
-            $builder->addDefinitions(__DIR__ . "/DependencyInjection/definitions/di-definition.{$environment}.php");
+            $builder->addDefinitions(__DIR__ . "/DependencyInjection/di-definition.{$environment}.php");
         }
     }
 }

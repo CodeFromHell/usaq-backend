@@ -9,8 +9,26 @@ use Psr\Log\LoggerInterface;
 use function DI\get;
 use function DI\object;
 use function DI\string;
+use function DI\env;
 
 return [
+
+    /* Persistence */
+    'database.paths' => [
+        string("{dir.base}/src/Model")
+    ],
+    'database.parameters' => [
+        'url' => env('DATABASE_URL')
+    ],
+
+    \Doctrine\ORM\EntityManager::class => function(ContainerInterface $c) {
+        $isDevMode = getenv('APP_ENV') === 'development';
+
+        $config = \Doctrine\ORM\Tools\Setup::createAnnotationMetadataConfiguration($c->get('database.paths'), $isDevMode);
+        return \Doctrine\ORM\EntityManager::create($c->get('database.parameters'), $config);
+    },
+    'persistence' => get(\Doctrine\ORM\EntityManager::class),
+
     /* Logger configuration */
     'maxLogFiles' => 20,
 
