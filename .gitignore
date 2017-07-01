@@ -16,7 +16,8 @@ logs/*
 !logs/.gitkeep
 
 # Storage folders
-storage/*
+storage/database/*
+!storage/database/.gitkeep
 
 # Composer Vendor
 vendor/
@@ -26,3 +27,4 @@ tests/_output/*
 
 # Others
 .php_cs.cache
+php_errors.log
