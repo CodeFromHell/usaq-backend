@@ -13,6 +13,7 @@ return [
     'dir.docs' => string('{dir.base}/docs'),
     'dir.logs' => string('{dir.base}/logs'),
     'dir.src' => string('{dir.base}/src'),
+    'dir.src.entities' => string('{dir.src}/Model/Entity'),
     'dir.storage' => string('{dir.base}/storage'),
 
     'settings.determineRouteBeforeAppMiddleware' => false,

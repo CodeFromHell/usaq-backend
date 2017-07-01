@@ -6,7 +6,7 @@ if (PHP_SAPI === 'cli-server' && $_SERVER['SCRIPT_FILENAME'] !== __FILE__) {
     return false;
 }
 
-$app = \USaq\App\Application::bootstrap();
+$app = require __DIR__ . '/../src/App/ApplicationBootstrap.php';
 
 // Run!
 $app->run();

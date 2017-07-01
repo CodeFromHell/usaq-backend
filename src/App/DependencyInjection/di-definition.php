@@ -12,19 +12,25 @@ use function DI\string;
 use function DI\env;
 
 return [
-
     /* Persistence */
     'database.paths' => [
-        string("{dir.base}/src/Model")
+        string("{dir.src.entities}/config")
     ],
     'database.parameters' => [
         'url' => env('DATABASE_URL')
     ],
 
-    \Doctrine\ORM\EntityManager::class => function(ContainerInterface $c) {
+    \Doctrine\ORM\EntityManager::class => function (ContainerInterface $c) {
         $isDevMode = getenv('APP_ENV') === 'development';
 
-        $config = \Doctrine\ORM\Tools\Setup::createAnnotationMetadataConfiguration($c->get('database.paths'), $isDevMode);
+        $config = \Doctrine\ORM\Tools\Setup::createConfiguration($isDevMode);
+
+        $namespaces = [
+            $c->get('dir.src.entities') . '/config' => 'USaq\Model\Entity'
+        ];
+        $driver = new \Doctrine\ORM\Mapping\Driver\SimplifiedYamlDriver($namespaces);
+        $config->setMetadataDriverImpl($driver);
+
         return \Doctrine\ORM\EntityManager::create($c->get('database.parameters'), $config);
     },
     'persistence' => get(\Doctrine\ORM\EntityManager::class),

@@ -24,7 +24,8 @@
         "league/fractal": "*",
         "respect/validation": "^1.0",
         "doctrine/orm": "^2.5",
-        "vlucas/phpdotenv": "^2.4"
+        "vlucas/phpdotenv": "^2.4",
+        "symfony/yaml": "*"
 
     },
     "require-dev": {

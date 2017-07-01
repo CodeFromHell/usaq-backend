@@ -6,5 +6,6 @@ class RoutesInitializer
 {
     public static function initialize(Application $app)
     {
+        $app->get('/login', ['USaq\Controller\LoginController', 'login']);
     }
 }

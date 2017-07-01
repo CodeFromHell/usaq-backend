@@ -4,8 +4,6 @@ namespace USaq\App;
 
 use DI\Bridge\Slim\App;
 use DI\ContainerBuilder;
-use Dotenv\Dotenv;
-use Dotenv\Exception\InvalidPathException;
 
 class Application extends App
 {
@@ -15,22 +13,6 @@ class Application extends App
 
         $this->initialize();
     }
-
-    public static function bootstrap()
-    {
-        require_once __DIR__ . '/../../vendor/autoload.php';
-
-        try {
-            $dotEnv = new Dotenv(__DIR__ . '/../../');
-            $dotEnv->load();
-        } catch (InvalidPathException $e) {
-            //
-        }
-
-        // Return instantiated the app
-        return new self();
-    }
-
 
     /**
      * Initialize application.
