@@ -54,4 +54,15 @@ class AuthenticationController
 
         return $response->withJson($resource);
     }
+
+    public function logout(Request $request, Response $response)
+    {
+        $body = $request->getParsedBody();
+
+        $user = $this->authService->retrieveUserByToken($body['token']);
+
+        $resource = ['username' => $user->getUsername()];
+
+        return $response->withJson($resource);
+    }
 }

@@ -9,7 +9,10 @@ USaq\Model\Entity\Token:
   fields:
     tokenString:
       type: string
-      name: token_string
+      column: token_string
+    expireAt:
+      type: datetime
+      column: expire_at
   oneToOne:
     user:
       targetEntity: User

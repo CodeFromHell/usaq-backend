@@ -66,7 +66,7 @@ class AuthenticationService
         return $token;
     }
 
-    public function retrieveUserByToken(string $tokenString)
+    public function retrieveUserByToken(string $tokenString): User
     {
         $tokenRepository = $this->em->getRepository('USaq\Model\Entity\Token');
 
@@ -74,7 +74,7 @@ class AuthenticationService
         $token = $tokenRepository->findOneBy(['tokenString' => $tokenString]);
 
         if (!$token)
-            throw new \Exception();
+            throw new EntityNotFoundException('Token not found');
 
         return $token->getUser();
     }
