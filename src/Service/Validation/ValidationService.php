@@ -1,6 +1,6 @@
 <?php
 
-namespace USaq\Service;
+namespace USaq\Service\Validation;
 
 use Respect\Validation\Exceptions\NestedValidationException;
 use Respect\Validation\Validator as V;
@@ -23,11 +23,28 @@ class ValidationService
 
         try {
             V::keySet(
-                V::key('user', $this->usernameValidator),
+                V::key('username', $this->usernameValidator),
                 V::key('password', $this->passwordValidator),
                 V::key('password_repeat', $this->passwordValidator)
             )
             ->keyValue('password_repeat', 'equals', 'password')
+            ->assert($data);
+        } catch (NestedValidationException $e) {
+            $errors = $e->getFullMessage();
+        }
+
+        return $errors;
+    }
+
+    public function validateLoginRequest($data)
+    {
+        $errors = '';
+
+        try {
+            V::keySet(
+                V::key('username', $this->usernameValidator),
+                V::key('password', $this->passwordValidator)
+            )
             ->assert($data);
         } catch (NestedValidationException $e) {
             $errors = $e->getFullMessage();

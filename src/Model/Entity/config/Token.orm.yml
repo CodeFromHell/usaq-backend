@@ -1,0 +1,15 @@
+USaq\Model\Entity\Token:
+  type: entity
+  table: tokens
+  id:
+    id:
+      type: integer
+      generator:
+        strategy: AUTO
+  fields:
+    tokenString:
+      type: string
+      name: token_string
+  oneToOne:
+    user:
+      targetEntity: User

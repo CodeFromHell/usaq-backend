@@ -7,7 +7,11 @@ USaq\Model\Entity\User:
       generator:
         strategy: AUTO
   fields:
-    mail:
+    username:
+      type: string
+      unique: true
+    password:
       type: string
     nickname:
       type: string
+      nullable: true

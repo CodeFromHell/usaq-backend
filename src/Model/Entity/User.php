@@ -15,16 +15,33 @@ class User
     /**
      * @var string
      */
-    private $mail;
+    private $username;
+
+    /**
+     * @var string
+     */
+    private $password;
 
     /**
      * @var string
      */
     private $nickname;
 
+    /**
+     * User constructor.
+     *
+     * @param string $username
+     * @param string $password
+     */
+    public function __construct(string $username, string $password)
+    {
+        $this->username = $username;
+        $this->password = $password;
+    }
+
 
     /**
-     * Get id
+     * Get id.
      *
      * @return integer
      */
@@ -34,50 +51,68 @@ class User
     }
 
     /**
-     * Set mail
+     * Get username
      *
-     * @param string $mail
+     * @return string
+     */
+    public function getUsername(): string
+    {
+        return $this->username;
+    }
+
+    /**
+     * Set username.
      *
+     * @param string $username
      * @return User
      */
-    public function setMail($mail)
+    public function setUsername(string $username): User
     {
-        $this->mail = $mail;
-
+        $this->username = $username;
         return $this;
     }
 
     /**
-     * Get mail
+     * Get password.
      *
      * @return string
      */
-    public function getMail()
+    public function getPassword(): string
     {
-        return $this->mail;
+        return $this->password;
     }
 
     /**
-     * Set nickname
+     * Set password.
+     *
+     * @param string $password
+     * @return User
+     */
+    public function setPassword(string $password): User
+    {
+        $this->password = $password;
+        return $this;
+    }
+
+    /**
+     * Get nickname.
+     *
+     * @return string
+     */
+    public function getNickname(): string
+    {
+        return $this->nickname ?? '';
+    }
+
+    /**
+     * Set nickname.
      *
      * @param string $nickname
-     *
      * @return User
      */
-    public function setNickname($nickname)
+    public function setNickname(string $nickname): User
     {
         $this->nickname = $nickname;
-
         return $this;
-    }
-
-    /**
-     * Get nickname
-     *
-     * @return string
-     */
-    public function getNickname()
-    {
-        return $this->nickname;
     }
 }
