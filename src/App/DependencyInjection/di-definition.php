@@ -28,6 +28,7 @@ return [
         $namespaces = [
             $c->get('dir.src.entities') . '/config' => 'USaq\Model\Entity'
         ];
+
         $driver = new \Doctrine\ORM\Mapping\Driver\SimplifiedYamlDriver($namespaces);
         $config->setMetadataDriverImpl($driver);
 
@@ -36,10 +37,10 @@ return [
     'persistence' => get(\Doctrine\ORM\EntityManager::class),
 
     /* Logger configuration */
-    'maxLogFiles' => 20,
+    'logger.max-log-files' => 20,
 
     StreamHandler::class => object()->constructor(string('{dir.logs}/logs.log')),
-    RotatingFileHandler::class => object()->constructor(string('{dir.logs}/logger.log'), get('maxLogFiles')),
+    RotatingFileHandler::class => object()->constructor(string('{dir.logs}/logger.log'), get('logger.max-log-files')),
 
     'logger.handlers' => [
         get(RotatingFileHandler::class)
@@ -53,5 +54,5 @@ return [
         $logger->pushProcessor(new PsrLogMessageProcessor());
 
         return $logger;
-    },
+    }
 ];

@@ -9,5 +9,5 @@ use function DI\string;
 return [
     /* Logger configuration */
     StreamHandler::class => object()->constructor(string('{dir.logs}/logs-dev.log')),
-    RotatingFileHandler::class => object()->constructor(string('{dir.logs}/logger-dev.log'), get('maxLogFiles'))
+    RotatingFileHandler::class => object()->constructor(string('{dir.logs}/logger-dev.log'), get('logger.max-log-files'))
 ];

@@ -2,36 +2,38 @@
 
 namespace USaq\Controller;
 
-use Doctrine\ORM\EntityManager;
+use Slim\Http\Response as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
-use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Log\LoggerInterface;
-use USaq\Model\Entity\User;
+use USaq\Service\AuthenticationService;
+use USaq\Service\ValidationService;
 
 class AuthenticationController
 {
+    private $authService;
+
     private $logger;
 
-    private $entity;
+    private $validator;
 
-    public function __construct(LoggerInterface $logger, EntityManager $entity)
+    public function __construct(AuthenticationService $authService, LoggerInterface $logger, ValidationService $validator)
     {
+        $this->authService = $authService;
         $this->logger = $logger;
-        $this->entity = $entity;
+        $this->validator = $validator;
     }
 
-    public function login(Request $request, Response $response)
+    public function register(Request $request, Response $response)
     {
-        $this->logger->info('Entrar en login');
+        $body = $request->getParsedBody();
 
-        $user = new User();
-        $user->setMail("msmmam@msmsm.com");
-        $user->setNickname("asdsada");
+        $errors = $this->validator->validateRegisterRequest($body);
 
-        $this->entity->persist($user);
+        if ($errors)
+            return $response->withJson($errors);
 
-        $this->entity->flush();
+        $resource = ['result' => 'OK'];
 
-        return $response->getBody()->write('Texto');
+        return $response->withJson($resource);
     }
 }
