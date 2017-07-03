@@ -15,6 +15,11 @@
             "USaq\\": "src"
         }
     },
+    "autoload-dev": {
+        "psr-4": {
+            "Test\\USaq\\": "tests/src"
+        }
+    },
     "require": {
         "slim/slim": "^3.0",
         "php-di/slim-bridge": "^1.0",

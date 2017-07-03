@@ -3,9 +3,12 @@
 use Doctrine\ORM\Tools\Console\ConsoleRunner;
 
 // replace with file to your own project bootstrap
-$app = require __DIR__ . '/../src/App/ApplicationBootstrap.php';
+/**
+ * @var \Psr\Container\ContainerInterface $container
+ */
+$container = require __DIR__ . '/../src/App/ContainerBootstrap.php';
 
 // replace with mechanism to retrieve EntityManager in your app
-$entityManager = $app->getContainer()->get('persistence');
+$entityManager = $container->get('persistence');
 
 return ConsoleRunner::createHelperSet($entityManager);

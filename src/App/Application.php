@@ -4,6 +4,7 @@ namespace USaq\App;
 
 use DI\Bridge\Slim\App;
 use DI\ContainerBuilder;
+use Psr\Container\ContainerInterface;
 
 class Application extends App
 {
@@ -40,5 +41,11 @@ class Application extends App
         if ($environment) {
             $builder->addDefinitions(__DIR__ . "/DependencyInjection/di-definition.{$environment}.php");
         }
+
+        $builder->addDefinitions([
+            \Slim\App::class => function (ContainerInterface $container) {
+                return $this;
+            }
+        ]);
     }
 }

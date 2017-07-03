@@ -9,5 +9,7 @@ try {
     //
 }
 
-// Instantiate the app
-return new \USaq\App\Application();
+// Instantiate the app and return internal container
+$app = new \USaq\App\Application();
+
+return $app->getContainer();
