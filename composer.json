@@ -16,21 +16,20 @@
         }
     },
     "require": {
-        "php": ">7.1",
         "slim/slim": "^3.0",
         "php-di/slim-bridge": "^1.0",
         "monolog/monolog": "^1.13",
-        "symfony/event-dispatcher": "*",
+        "symfony/event-dispatcher": "^3.0",
         "league/fractal": "*",
         "respect/validation": "^1.0",
         "doctrine/orm": "^2.5",
         "vlucas/phpdotenv": "^2.4",
-        "symfony/yaml": "*"
-
+        "symfony/yaml": "^3.0"
     },
     "require-dev": {
-        "codeception/codeception": "^2.0",
-        "anahkiasen/rocketeer": "^2.2"
+        "codeception/codeception": "^2.3",
+        "deployer/deployer": "^5.0",
+        "herloct/codeception-slim-module": "^1.1"
     },
     "config": {
         "process-timeout": 0

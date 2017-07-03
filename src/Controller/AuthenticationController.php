@@ -30,7 +30,7 @@ class AuthenticationController
         $errors = $this->validator->validateRegisterRequest($body);
 
         if ($errors)
-            return $response->withJson($errors);
+            return $response->withJson(['errors' => true, 'message' => $errors]);
 
         $this->authService->createUser($body['username'], $body['password']);
 
