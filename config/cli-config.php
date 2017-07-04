@@ -1,14 +1,12 @@
 <?php
 
 use Doctrine\ORM\Tools\Console\ConsoleRunner;
+use USaq\Facade\Container;
 
 // replace with file to your own project bootstrap
-/**
- * @var \Psr\Container\ContainerInterface $container
- */
-$container = require __DIR__ . '/../src/App/ContainerBootstrap.php';
+require __DIR__ . '/../app/bootstrap.php';
 
 // replace with mechanism to retrieve EntityManager in your app
-$entityManager = $container->get('persistence');
+$entityManager = Container::get('persistence');
 
 return ConsoleRunner::createHelperSet($entityManager);

@@ -43,9 +43,10 @@ class Application extends App
         }
 
         $builder->addDefinitions([
-            \Slim\App::class => function (ContainerInterface $container) {
+            'app' => function (ContainerInterface $c) {
                 return $this;
-            }
+            },
+            \Slim\App::class => \DI\get('app')
         ]);
     }
 }
