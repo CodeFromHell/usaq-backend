@@ -1,6 +1,6 @@
 <?php
 
-use USaq\Facade\App;
+use USaq\StaticProxy\App;
 
 // To help the built-in PHP dev server, check if the request was actually for
 // something which should probably be served as a static file

@@ -1,17 +1,17 @@
 <?php
 
-namespace USaq\Facade;
+namespace USaq\StaticProxy;
 
 /**
- * Persistence Layer Facade.
+ * Persistence Layer StaticProxy.
  *
  * @method static getRepository(string $entityClass)
  * @method static persist($entity)
  * @method static flush()
  */
-class Persistence extends Facade
+class Persistence extends StaticProxy
 {
-    protected static function getFacadeAccessor()
+    protected static function getServiceAccessor()
     {
         return 'persistence';
     }

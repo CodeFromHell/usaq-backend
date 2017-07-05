@@ -10,7 +10,7 @@ modules:
     enabled:
         # add a framework module here
         - Doctrine2:
-            connection_callback: ['\USaq\Facade\Persistence', 'getFacadeRoot']
+            connection_callback: ['\USaq\StaticProxy\Persistence', 'getStaticProxyRoot']
             cleanup: true # All doctrine queries will be wrapped in a transaction, which will be rolled back at the end of each test
         - \Herloct\Codeception\Module\Slim:
             container: tests/_data/container-bootstrap.php

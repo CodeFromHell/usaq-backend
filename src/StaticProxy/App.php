@@ -1,6 +1,6 @@
 <?php
 
-namespace USaq\Facade;
+namespace USaq\StaticProxy;
 
 /**
  * App facade.
@@ -8,12 +8,12 @@ namespace USaq\Facade;
  * @method static \Psr\Container\ContainerInterface getContainer()
  * @method static \Psr\Http\Message\ResponseInterface run($silent = false)
  */
-class App extends Facade
+class App extends StaticProxy
 {
     /**
      * @return \Slim\App
      */
-    protected static function getFacadeAccessor()
+    protected static function getServiceAccessor()
     {
         return self::$app;
     }

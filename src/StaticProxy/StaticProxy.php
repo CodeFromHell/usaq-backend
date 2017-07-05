@@ -1,18 +1,18 @@
 <?php
 
-namespace USaq\Facade;
+namespace USaq\StaticProxy;
 
 use Slim\App;
 
 /**
- * Class Facade.
+ * Class StaticProxy.
  *
- * All new Facades must extend this abstract class.
+ * All new static proxies must extend this abstract class.
  */
-abstract class Facade
+abstract class StaticProxy
 {
     /**
-     * The application instance being facaded.
+     * The application instance being proxied.
      *
      * @var App
      */
@@ -26,13 +26,13 @@ abstract class Facade
     protected static $resolvedInstance;
 
     /**
-     * Get the root object behind the facade.
+     * Get the root object behind the static proxy.
      *
      * @return mixed
      */
-    public static function getFacadeRoot()
+    public static function getStaticProxyRoot()
     {
-        return static::resolveFacadeInstance(static::getFacadeAccessor());
+        return static::resolveServiceInstance(static::getServiceAccessor());
     }
 
     /**
@@ -42,18 +42,18 @@ abstract class Facade
      *
      * @throws \RuntimeException
      */
-    protected static function getFacadeAccessor()
+    protected static function getServiceAccessor()
     {
-        throw new \RuntimeException('Facade does not implement getFacadeAccessor method.');
+        throw new \RuntimeException('StaticProxy does not implement getServiceAccessor method.');
     }
 
     /**
-     * Resolve the facade root instance from the container.
+     * Resolve the proxy root instance from the container.
      *
      * @param  string|object  $name
      * @return mixed
      */
-    private static function resolveFacadeInstance($name)
+    private static function resolveServiceInstance($name)
     {
         if (is_object($name)) {
             return $name;
@@ -67,7 +67,7 @@ abstract class Facade
     }
 
     /**
-     * Clear a resolved facade instance.
+     * Clear a resolved service instance.
      *
      * @param  string  $name
      * @return void
@@ -88,11 +88,11 @@ abstract class Facade
     }
 
     /**
-     * Get the application instance behind the facade.
+     * Get the application instance behind the proxy.
      *
      * @return App
      */
-    public static function getFacadeApplication()
+    public static function getStaticProxyApplication()
     {
         return static::$app;
     }
@@ -103,7 +103,7 @@ abstract class Facade
      * @param  App  $app
      * @return void
      */
-    public static function setFacadeApplication(App $app)
+    public static function setStaticProxyApplication(App $app)
     {
         static::$app = $app;
     }
@@ -119,10 +119,10 @@ abstract class Facade
      */
     public static function __callStatic($method, $args)
     {
-        $instance = static::getFacadeRoot();
+        $instance = static::getStaticProxyRoot();
 
         if (!$instance) {
-            throw new \RuntimeException('A facade root has not been set.');
+            throw new \RuntimeException('A static proxy root has not been set.');
         }
 
         return $instance->$method(...$args);

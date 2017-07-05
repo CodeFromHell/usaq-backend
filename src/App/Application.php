@@ -5,23 +5,24 @@ namespace USaq\App;
 use DI\Bridge\Slim\App;
 use DI\ContainerBuilder;
 use Psr\Container\ContainerInterface;
+use USaq\Provider\ServiceProviderInterface;
+use USaq\Routes\RoutesProviderInterface;
 
 class Application extends App
 {
-    public function __construct()
-    {
-        parent::__construct();
-
-        $this->initialize();
-    }
+    /**
+     * @var string[]
+     */
+    protected static $serviceProviders;
 
     /**
-     * Initialize application.
+     * Register applications ServiceProviders for dependency container.
+     *
+     * @param string[] $serviceProviders
      */
-    protected function initialize()
+    public static function registerServiceProviders(array $serviceProviders)
     {
-        MiddlewareInitializer::initialize($this);
-        RoutesInitializer::initialize($this);
+        static::$serviceProviders = $serviceProviders;
     }
 
     /**
@@ -31,15 +32,21 @@ class Application extends App
      */
     protected function configureContainer(ContainerBuilder $builder)
     {
-        /* Configuration definitions */
-        $builder->addDefinitions(__DIR__ . "/../../config/configuration.php");
-
-        /* DIC default definitions */
-        $builder->addDefinitions(__DIR__ . "/DependencyInjection/di-definition.php");
-
         $environment = getenv('APP_ENV');
-        if ($environment) {
-            $builder->addDefinitions(__DIR__ . "/DependencyInjection/di-definition.{$environment}.php");
+
+        foreach (static::$serviceProviders as $serviceProviderClassName) {
+            $serviceProvider = new $serviceProviderClassName();
+
+            if (!$serviceProvider instanceof ServiceProviderInterface) {
+                throw new \RuntimeException('Not implements ServiceProvider interface');
+            }
+
+            $builder->addDefinitions($serviceProvider->registerServices());
+
+            if ($environment == 'development')
+                $builder->addDefinitions($serviceProvider->registerServicesDevelopment());
+            elseif ($environment == 'test')
+                $builder->addDefinitions($serviceProvider->registerServicesTest());
         }
 
         $builder->addDefinitions([
@@ -48,5 +55,40 @@ class Application extends App
             },
             \Slim\App::class => \DI\get('app')
         ]);
+    }
+
+    /**
+     * Register application global middlewares.
+     *
+     * Middlewares acts as LIFO queue.
+     *
+     * @param mixed[] $middlewares
+     */
+    public function registerMiddlewares(array $middlewares)
+    {
+        foreach ($middlewares as $middleware) {
+            if (!is_callable($middleware) && !is_string($middleware))
+                throw new \RuntimeException('Not a callable or string for container');
+
+            $this->add($middleware);
+        }
+    }
+
+    /**
+     * Register routes.
+     *
+     * @param string[] $routesProviders
+     */
+    public function registerRoutes(array $routesProviders)
+    {
+        $this->group('/api', function () use ($routesProviders) {
+           foreach ($routesProviders as $routeProviderClassName) {
+               $routeProvider = new $routeProviderClassName();
+               if (!$routeProvider instanceof RoutesProviderInterface)
+                   throw new \RuntimeException('Not implements RoutesProviderInterface');
+
+               $routeProvider->registerRoutes($this);
+           }
+        });
     }
 }

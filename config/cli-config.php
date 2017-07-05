@@ -1,7 +1,7 @@
 <?php
 
 use Doctrine\ORM\Tools\Console\ConsoleRunner;
-use USaq\Facade\Container;
+use USaq\StaticProxy\Container;
 
 // replace with file to your own project bootstrap
 require __DIR__ . '/../app/bootstrap.php';

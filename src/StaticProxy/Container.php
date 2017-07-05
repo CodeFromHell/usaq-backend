@@ -1,21 +1,21 @@
 <?php
 
-namespace USaq\Facade;
+namespace USaq\StaticProxy;
 
 use Psr\Container\ContainerInterface;
 
 /**
- * Container Facade.
+ * Container StaticProxy.
  *
  * @method static mixed get($id)
  * @method static bool has($id)
  */
-class Container extends Facade
+class Container extends StaticProxy
 {
     /**
      * @return ContainerInterface
      */
-    protected static function getFacadeAccessor()
+    protected static function getServiceAccessor()
     {
         return static::$app->getContainer();
     }

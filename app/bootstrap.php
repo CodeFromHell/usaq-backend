@@ -1,6 +1,7 @@
 <?php
 
-use USaq\Facade\Facade;
+use USaq\App\Application;
+use USaq\StaticProxy\StaticProxy;
 
 require_once __DIR__ . '/../vendor/autoload.php';
 
@@ -11,8 +12,32 @@ try {
     //
 }
 
-// Instantiate the app
-$app = new \USaq\App\Application();
+/* *********************************************** */
+/* *        Register Service Providers           * */
+/* *********************************************** */
+// Register service providers for applications
+Application::registerServiceProviders([
+    \USaq\Provider\SettingsProvider::class,
+    \USaq\Provider\LoggerProvider::class,
+    \USaq\Provider\DoctrineProvider::class
+]);
 
-// Prepare Facades
-Facade::setFacadeApplication($app);
+// Instantiate the app
+$app = new Application();
+
+/* *********************************************** */
+/* *        Register Global Middlewares          * */
+/* *********************************************** */
+// Register global application middlewares
+// Acts as LIFO queue, last added midleware is processed first
+//$app->registerMiddlewares([]);
+
+/* *********************************************** */
+/* *               Register Routes               * */
+/* *********************************************** */
+$app->registerRoutes([
+   \USaq\Routes\UserRoutes::class
+]);
+
+// Prepare Static Proxies
+StaticProxy::setStaticProxyApplication($app);
