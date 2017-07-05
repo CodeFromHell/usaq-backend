@@ -3,7 +3,9 @@
 namespace USaq\App;
 
 use DI\Bridge\Slim\App;
+use DI\Cache\ArrayCache;
 use DI\ContainerBuilder;
+use Doctrine\Common\Cache\FilesystemCache;
 use Psr\Container\ContainerInterface;
 use USaq\Provider\ServiceProviderInterface;
 use USaq\Routes\RoutesProviderInterface;
@@ -33,6 +35,13 @@ class Application extends App
     protected function configureContainer(ContainerBuilder $builder)
     {
         $environment = getenv('APP_ENV');
+
+        // Add caching for definitions
+        if ($environment !== 'production') {
+            $builder->setDefinitionCache(new ArrayCache());
+        } else {
+            $builder->setDefinitionCache(new FilesystemCache(__DIR__ . '/../../cache/container'));
+        }
 
         foreach (static::$serviceProviders as $serviceProviderClassName) {
             $serviceProvider = new $serviceProviderClassName();

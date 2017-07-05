@@ -1,16 +1,12 @@
 <?php
-/**
- * Created by IntelliJ IDEA.
- * User: RJ Corchero
- * Date: 05/07/2017
- * Time: 21:02
- */
 
 namespace USaq\Provider;
 
+use function DI\object;
 use function DI\string;
 use function DI\get;
 use function DI\env;
+use Doctrine\Common\Cache\FilesystemCache;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Mapping\Driver\SimplifiedYamlDriver;
 use Doctrine\ORM\Tools\Setup;
@@ -32,12 +28,22 @@ class DoctrineProvider implements ServiceProviderInterface
                 'url' => env('DATABASE_URL')
             ],
 
+            'dir.cache.metadata' => string('{dir.cache}/doctrine/metadata'),
+
+            'dir.cache.proxies' => string('{dir.cache}/doctrine/proxies'),
+
             'persistence' => get(EntityManager::class),
 
-            EntityManager::class => function (ContainerInterface $c) {
-                $isDevMode = getenv('APP_ENV') === 'development';
+            'cache' => object(FilesystemCache::class)->constructor(get('dir.cache.metadata')),
 
-                $config = Setup::createConfiguration($isDevMode);
+            EntityManager::class => function (ContainerInterface $c) {
+                $isDevMode = getenv('APP_ENV') !== 'production';
+
+                if ($isDevMode) {
+                    $config = Setup::createConfiguration($isDevMode);
+                } else {
+                    $config = Setup::createConfiguration($isDevMode, $c->get('dir.cache.proxies'), $c->get('cache'));
+                }
 
                 $namespaces = [
                     $c->get('dir.src.entities') . '/config' => 'USaq\Model\Entity'
