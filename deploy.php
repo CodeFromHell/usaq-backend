@@ -4,13 +4,20 @@ namespace Deployer;
 require 'recipe/common.php';
 
 // Configuration
+// Repository
 set('repository', 'https://github.com/CodeFromHell/usaq-backend.git');
 set('git_tty', false); // [Optional] Allocate tty for git on first deployment
-set('shared_files', []);
+
+// Dirs
 set('shared_dirs', [
     'logs',
     'storage'
 ]);
+
+set('shared_files', [
+    '.env',
+]);
+
 set('writable_dirs', []);
 
 
@@ -19,6 +26,7 @@ host('solus')
     ->stage('production')
     ->roles('app')
     ->set('deploy_path', '~/applications/usaq/production')
+    ->set('branch', 'development')
     ->configFile('~/.ssh/config');
 
 
