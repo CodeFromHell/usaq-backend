@@ -13,7 +13,7 @@ modules:
             connection_callback: ['\USaq\StaticProxy\Persistence', 'getStaticProxyRoot']
             cleanup: true # All doctrine queries will be wrapped in a transaction, which will be rolled back at the end of each test
         - \Herloct\Codeception\Module\Slim:
-            container: tests/_data/container-bootstrap.php
+            container: tests/_data/test-bootstrap.php
         - REST:
             depends: \Herloct\Codeception\Module\Slim
             part: Json
