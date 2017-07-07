@@ -1,4 +1,9 @@
 <?php
+/**
+ * Bootstrap PSR-11 container and return it.
+ *
+ * Must return application in keys 'app' and '\Slim\App::class'.
+ */
 
 use USaq\App\Application;
 use USaq\StaticProxy\StaticProxy;

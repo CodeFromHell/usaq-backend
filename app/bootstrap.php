@@ -1,6 +1,7 @@
 <?php
-
-use USaq\StaticProxy\StaticProxy;
+/**
+ * Bootstrap and return application.
+ */
 
 // Composer autoloader
 require_once __DIR__ . '/../vendor/autoload.php';
