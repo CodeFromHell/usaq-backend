@@ -6,7 +6,7 @@ use Doctrine\ORM\EntityManager;
 use USaq\Model\Entity\Token;
 use USaq\Model\Entity\User;
 use USaq\Model\Exception\EntityNotFoundException;
-use USaq\Service\Validation\Exception\PasswordNotMatchException;
+use USaq\Service\Exception\AuthenticationException;
 
 /**
  * Provide operations to authenticate an user.
@@ -48,11 +48,8 @@ class AuthenticationService
         /** @var User $user */
         $user = $userRepository->findOneBy(['username' => $username]);
 
-        if (!$user)
-            throw new EntityNotFoundException('There is no User with that username');
-
-        if (!password_verify($password, $user->getPassword()))
-            throw new PasswordNotMatchException('Passwords not match');
+        if (!$user || !password_verify($password, $user->getPassword()))
+            throw new AuthenticationException('Incorrect username or password');
 
         $token = new Token();
         $token->setUser($user);
