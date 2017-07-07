@@ -1,7 +1,5 @@
 <?php
 
-use USaq\StaticProxy\App;
-
 // Composer autoloader
 require_once __DIR__ . '/../../vendor/autoload.php';
 
@@ -13,7 +11,8 @@ try {
     //
 }
 
-// Bootstrap app
-require __DIR__ . '/../../app/bootstrap.php';
+// Require container
+$container = require __DIR__ . '/../../app/container/container.php';
 
-return App::getContainer();
+// Return container
+return $container;

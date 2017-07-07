@@ -2,7 +2,6 @@
 
 use USaq\App\Application;
 use USaq\StaticProxy\StaticProxy;
-use USaq\StaticProxy\App;
 
 /* *********************************************** */
 /* *        Register Service Providers           * */
@@ -34,3 +33,8 @@ $app = new Application();
 $app->registerRoutes([
     \USaq\Routes\UserRoutes::class
 ]);
+
+// Prepare Static Proxies
+StaticProxy::setStaticProxyApplication($app);
+
+return $app->getContainer();

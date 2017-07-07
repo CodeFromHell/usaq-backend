@@ -13,7 +13,7 @@ try {
     //
 }
 
-require __DIR__ . '/container/container.php';
+/** @var \Psr\Container\ContainerInterface $container */
+$container = require __DIR__ . '/container/container.php';
 
-// Prepare Static Proxies
-StaticProxy::setStaticProxyApplication($app);
+return $container->get('app');
