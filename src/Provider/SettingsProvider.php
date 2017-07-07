@@ -2,7 +2,12 @@
 
 namespace USaq\Provider;
 
+use function DI\get;
+use function DI\object;
 use function DI\string;
+use USaq\App\Handler\ApiError;
+use USaq\App\Handler\NotAllowedError;
+use USaq\App\Handler\NotFoundError;
 
 class SettingsProvider implements ServiceProviderInterface
 {
@@ -23,6 +28,12 @@ class SettingsProvider implements ServiceProviderInterface
 
             'settings.determineRouteBeforeAppMiddleware' => false,
             'settings.displayErrorDetails' => false,
+
+            // Handlers
+            'errorHandler' => get('phpErrorHandler'),
+            'phpErrorHandler' => object(ApiError::class)->constructor(get('logger')),
+            'notFoundHandler' => object(NotFoundError::class),
+            'notAllowedHandler' => object(NotAllowedError::class)
         ];
     }
 

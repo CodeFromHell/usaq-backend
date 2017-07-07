@@ -31,6 +31,8 @@ class LoggerProvider implements ServiceProviderInterface
                 get(RotatingFileHandler::class)
             ],
 
+            'logger' => get(LoggerInterface::class),
+
             LoggerInterface::class => function (ContainerInterface $container) {
                 $logger = new Logger('REQUEST');
                 foreach ($container->get('logger.handlers') as $handlers) {

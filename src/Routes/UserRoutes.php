@@ -21,7 +21,7 @@ class UserRoutes implements  RoutesProviderInterface
         $app->group('/user', function () use ($app) {
             $app->post('/register', ['USaq\Controller\AuthenticationController', 'register']);
             $app->post('/login', ['USaq\Controller\AuthenticationController', 'login']);
-            $app->post('/logout', ['USaq\Controller\AuthenticationController', 'logout']);
+            $app->map(['POST', ], '/logout', ['USaq\Controller\AuthenticationController', 'logout']);
         });
     }
 }
