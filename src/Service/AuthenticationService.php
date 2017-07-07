@@ -3,7 +3,6 @@
 namespace USaq\Service;
 
 use Doctrine\ORM\EntityManager;
-use Slim\Exception\NotFoundException;
 use USaq\Model\Entity\Token;
 use USaq\Model\Entity\User;
 use USaq\Model\Exception\EntityNotFoundException;
@@ -50,7 +49,7 @@ class AuthenticationService
         $user = $userRepository->findOneBy(['username' => $username]);
 
         if (!$user)
-            throw new EntityNotFoundException('User not found');
+            throw new EntityNotFoundException('There is no User with that username');
 
         if (!password_verify($password, $user->getPassword()))
             throw new PasswordNotMatchException('Passwords not match');

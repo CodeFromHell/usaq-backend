@@ -4,6 +4,7 @@ namespace USaq\Service\Validation;
 
 use Respect\Validation\Exceptions\NestedValidationException;
 use Respect\Validation\Validator as V;
+use USaq\Service\Validation\Exception\FieldValidationException;
 
 class ValidationService
 {
@@ -17,7 +18,11 @@ class ValidationService
         $this->passwordValidator = V::alnum()->length(4, 30);
     }
 
-    public function validateRegisterRequest($data)
+    /**
+     * @param $data
+     * @throws FieldValidationException
+     */
+    public function validateRegisterRequest($data): void
     {
         $errors = '';
 
@@ -30,16 +35,20 @@ class ValidationService
             ->keyValue('password_repeat', 'equals', 'password')
             ->assert($data);
         } catch (NestedValidationException $e) {
-            $errors = $e->getFullMessage();
-        }
+            $errors = $e->getMessages();
 
-        return $errors;
+            $exception = new FieldValidationException('Login validation error');
+            $exception->addFieldsErrors($errors);
+            throw $exception;
+        }
     }
 
-    public function validateLoginRequest($data)
+    /**
+     * @param $data
+     * @throws FieldValidationException
+     */
+    public function validateLoginRequest($data): void
     {
-        $errors = '';
-
         try {
             V::keySet(
                 V::key('username', $this->usernameValidator),
@@ -47,9 +56,11 @@ class ValidationService
             )
             ->assert($data);
         } catch (NestedValidationException $e) {
-            $errors = $e->getFullMessage();
-        }
+            $errors = $e->getMessages();
 
-        return $errors;
+            $exception = new FieldValidationException('Login validation error');
+            $exception->addFieldsErrors($errors);
+            throw $exception;
+        }
     }
 }

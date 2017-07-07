@@ -29,6 +29,7 @@
         "doctrine/orm": "^2.5",
         "vlucas/phpdotenv": "^2.4",
         "symfony/yaml": "^3.0",
+        "consolidation/robo": "^1.0",
         "crell/api-problem": "^2.0",
         "gofabian/negotiation-middleware": "^0.1.2",
         "tuupola/cors-middleware": "^0.5.0"

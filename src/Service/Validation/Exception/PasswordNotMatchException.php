@@ -3,6 +3,14 @@
 namespace USaq\Service\Validation\Exception;
 
 
-class PasswordNotMatchException extends \Exception
+use USaq\App\Exception\USaqApplicationException;
+
+class PasswordNotMatchException extends USaqApplicationException
 {
+    public function getTitle(): string
+    {
+        return 'Passwords not match';
+    }
+
+
 }

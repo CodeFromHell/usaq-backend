@@ -7,6 +7,7 @@ use Crell\ApiProblem\ApiProblem;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Log\LoggerInterface;
+use USaq\App\Exception\USaqApplicationException;
 
 class ApiError
 {
@@ -17,18 +18,55 @@ class ApiError
         $this->logger = $logger;
     }
 
-    public function __invoke(Request $request, Response $response, \Throwable $exception)
+    public function __invoke(Request $request, Response $response, \Throwable $throwable)
     {
-        $this->logger->critical($exception->getMessage());
-        $status = $exception->getCode() ?: 500;
-        $problem = new ApiProblem($exception->getMessage(), "about:blank");
-        $problem->setStatus($status);
+        $this->logger->critical($throwable->getMessage());
+
+        if ($throwable instanceof USaqApplicationException) {
+            $problem = $this->generateSpecificApiProblem($throwable);
+        } elseif ($throwable instanceof \Exception) {
+            $problem = $this->generateGeneralApiProblem($throwable);
+        } else {
+            $problem = $this->generateApiProblem($throwable);
+        }
+
         $body = $problem->asJson(true);
 
         $response->getBody()->write($body);
 
         return $response
-            ->withStatus($status)
+            ->withStatus($problem->getStatus())
             ->withHeader("Content-type", "application/problem+json");
+    }
+
+    protected function generateApiProblem(\Throwable $e): ApiProblem
+    {
+        $problem = new ApiProblem('Internal error', "about:blank");
+        $problem->setDetail('An internal error has occurred. ');
+        $problem->setStatus($e->getCode() ?: 500);
+
+        return $problem;
+    }
+
+    protected function generateGeneralApiProblem(\Exception $e): ApiProblem
+    {
+        $problem = new ApiProblem('General error', "about:blank");
+        $problem->setDetail('An error has occurred due to request. Please retry in a few minutes.');
+        $problem->setStatus($status = $e->getCode() ?: 400);
+
+        return $problem;
+    }
+
+    protected function generateSpecificApiProblem(USaqApplicationException $e): ApiProblem
+    {
+        $problem = new ApiProblem($e->getTitle(), "about:blank");
+        $problem->setDetail($e->getMessage());
+        $problem->setStatus($status = $e->getCode() ?: 400);
+
+        foreach ($e->getExtensionData() as $key => $value) {
+            $problem[$key] = $value;
+        }
+
+        return $problem;
     }
 }
