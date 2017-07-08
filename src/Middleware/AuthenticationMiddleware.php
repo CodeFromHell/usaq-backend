@@ -7,7 +7,7 @@ use Psr\Http\Message\ResponseInterface as Response;
 
 class AuthenticationMiddleware
 {
-    function __invoke(Request $request, Response $response, callable $next)
+    public function __invoke(Request $request, Response $response, callable $next)
     {
     }
 }

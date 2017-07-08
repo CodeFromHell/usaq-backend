@@ -10,6 +10,7 @@ use Robo\Robo;
 use Robo\Runner;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use USaq\App\Command\DevelopmentCommands;
 use USaq\App\Command\TestCommands;
 use USaq\Service\Validation\ValidationService;
 
@@ -20,7 +21,8 @@ class ApplicationConsole
     private $runner;
 
     private $commands = [
-        \USaq\App\Command\TestCommands::class
+        TestCommands::class,
+        DevelopmentCommands::class
     ];
 
     public function __construct(
