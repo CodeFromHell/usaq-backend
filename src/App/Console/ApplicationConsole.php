@@ -1,6 +1,6 @@
 <?php
 
-namespace USaq\App;
+namespace USaq\App\Console;
 
 use Consolidation\AnnotatedCommand\CommandFileDiscovery;
 use Psr\Container\ContainerInterface;
@@ -11,8 +11,6 @@ use Robo\Robo;
 use Robo\Runner;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use USaq\App\Command\DevelopmentCommands;
-use USaq\App\Command\TestCommands;
 
 class ApplicationConsole
 {
@@ -20,10 +18,7 @@ class ApplicationConsole
 
     private $runner;
 
-    private $commands = [
-        TestCommands::class,
-        DevelopmentCommands::class
-    ];
+    private $commands = [];
 
     public function __construct(
         Config $config,
@@ -31,7 +26,7 @@ class ApplicationConsole
         OutputInterface $output = null,
         ContainerInterface $applicationContainer
     ) {
-        // Create applicaton.
+        // Create application.
         $this->setConfig($config);
         $application = new Application('My Application', $config->get('version'));
 
@@ -45,11 +40,30 @@ class ApplicationConsole
         $this->runner->setContainer($container);
 
         // Add commands
-        $discovery = new CommandFileDiscovery();
-        $discovery->setSearchPattern('/.*Command(s){0,1}.php/');
-        $this->commands = $discovery->discover('src/App/Command', '\USaq\App\Command');
+        $this->registerCommands();
     }
 
+    /**
+     * Register all commands from src/App/Commands on application
+     */
+    protected function registerCommands()
+    {
+        $discovery = new CommandFileDiscovery();
+        $discovery->setSearchPattern('/.*Commands(s){0,1}.php/');
+        $commandList = $discovery->discover('src/App/Console/Commands', '\USaq\App\Console\Commands');
+
+        foreach ($commandList as $command) {
+            $this->commands[] = $this->runner->getContainer()->get($command);
+        }
+    }
+
+    /**
+     * Launch application.
+     *
+     * @param InputInterface $input
+     * @param OutputInterface $output
+     * @return int
+     */
     public function run(InputInterface $input, OutputInterface $output)
     {
         $status_code = $this->runner->run($input, $output, null, $this->commands);

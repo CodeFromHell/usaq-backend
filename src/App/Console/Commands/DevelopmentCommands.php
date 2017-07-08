@@ -1,6 +1,6 @@
 <?php
 
-namespace USaq\App\Command;
+namespace USaq\App\Console\Commands;
 
 use Robo\Tasks;
 

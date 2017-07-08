@@ -2,7 +2,6 @@
 
 namespace USaq\Service\Exception;
 
-
 use USaq\App\Exception\USaqApplicationException;
 
 class AuthenticationException extends USaqApplicationException

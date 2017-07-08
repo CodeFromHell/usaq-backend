@@ -48,8 +48,9 @@ class AuthenticationService
         /** @var User $user */
         $user = $userRepository->findOneBy(['username' => $username]);
 
-        if (!$user || !password_verify($password, $user->getPassword()))
+        if (!$user || !password_verify($password, $user->getPassword())) {
             throw new AuthenticationException('Incorrect username or password');
+        }
 
         $token = new Token();
         $token->setUser($user);
@@ -69,8 +70,9 @@ class AuthenticationService
         /** @var Token $token */
         $token = $tokenRepository->findOneBy(['tokenString' => $tokenString]);
 
-        if (!$token)
+        if (!$token) {
             throw new EntityNotFoundException('Token not found');
+        }
 
         return $token->getUser();
     }

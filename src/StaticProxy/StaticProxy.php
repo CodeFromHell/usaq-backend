@@ -59,7 +59,7 @@ abstract class StaticProxy
             return $name;
         }
 
-        if (isset(static::$resolvedInstance[$name]))  {
+        if (isset(static::$resolvedInstance[$name])) {
             return static::$resolvedInstance[$name];
         }
 

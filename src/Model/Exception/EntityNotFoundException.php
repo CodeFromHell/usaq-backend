@@ -2,7 +2,6 @@
 
 namespace USaq\Model\Exception;
 
-
 use USaq\App\Exception\USaqApplicationException;
 
 class EntityNotFoundException extends USaqApplicationException

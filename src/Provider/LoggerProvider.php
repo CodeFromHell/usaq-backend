@@ -2,7 +2,6 @@
 
 namespace USaq\Provider;
 
-
 use function DI\get;
 use function DI\object;
 use function DI\string;

@@ -1,6 +1,6 @@
 <?php
 
-namespace USaq\App\Command;
+namespace USaq\App\Console\Commands;
 
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Tools\Console\Command\SchemaTool\DropCommand;
@@ -8,6 +8,7 @@ use Doctrine\ORM\Tools\Console\ConsoleRunner;
 use Doctrine\ORM\Tools\SchemaTool;
 use Robo\Robo;
 use Robo\Tasks;
+use USaq\Service\Validation\Exception\FieldValidationException;
 use USaq\Service\Validation\ValidationService;
 
 class TestCommands extends Tasks
@@ -17,12 +18,7 @@ class TestCommands extends Tasks
      */
     private $validationService;
 
-    public function __construct()
-    {
-        $this->setValidationService(Robo::getContainer()->get(ValidationService::class));
-    }
-
-    public function setValidationService(ValidationService $service)
+    public function __construct(ValidationService $service)
     {
         $this->validationService = $service;
     }
@@ -35,6 +31,13 @@ class TestCommands extends Tasks
     public function test($name, $options = ['yell|y' => false])
     {
         $this->io()->title('Testing application');
+
+        try {
+            $this->validationService->validateLoginRequest(['asdad' => 'asddas']);
+            $this->io()->text('Ok');
+        } catch (FieldValidationException $e) {
+            $this->io()->text($e->getMessage());
+        }
 
         $message = 'Hello, ' . $name;
 

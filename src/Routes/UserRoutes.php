@@ -8,10 +8,9 @@
 
 namespace USaq\Routes;
 
-
 use USaq\App\Application;
 
-class UserRoutes implements  RoutesProviderInterface
+class UserRoutes implements RoutesProviderInterface
 {
     /**
      * @inheritDoc

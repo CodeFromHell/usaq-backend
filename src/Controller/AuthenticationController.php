@@ -29,8 +29,9 @@ class AuthenticationController
 
         $errors = $this->validator->validateRegisterRequest($body);
 
-        if ($errors)
+        if ($errors) {
             return $response->withJson(['errors' => true, 'message' => $errors]);
+        }
 
         $this->authService->createUser($body['username'], $body['password']);
 
@@ -45,8 +46,9 @@ class AuthenticationController
 
         $errors = $this->validator->validateLoginRequest($body);
 
-        if ($errors)
+        if ($errors) {
             return $response->withJson($errors);
+        }
 
         $token = $this->authService->loginUser($body['username'], $body['password']);
 

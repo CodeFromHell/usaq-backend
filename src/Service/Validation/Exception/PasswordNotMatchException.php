@@ -2,7 +2,6 @@
 
 namespace USaq\Service\Validation\Exception;
 
-
 use USaq\App\Exception\USaqApplicationException;
 
 class PasswordNotMatchException extends USaqApplicationException
@@ -11,6 +10,4 @@ class PasswordNotMatchException extends USaqApplicationException
     {
         return 'Passwords not match';
     }
-
-
 }

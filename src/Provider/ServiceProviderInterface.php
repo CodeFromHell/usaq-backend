@@ -2,7 +2,6 @@
 
 namespace USaq\Provider;
 
-
 interface ServiceProviderInterface
 {
     /**
