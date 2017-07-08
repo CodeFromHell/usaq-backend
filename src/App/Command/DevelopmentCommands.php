@@ -11,9 +11,9 @@ class DevelopmentCommands extends Tasks
         $this->taskServer()->dir('public')->background()->run();
     }
 
-    public function devFix()
+    public function devFix($directory = 'src/Middleware')
     {
-        $this->_exec('php-cs-fixer fix src/Middleware');
+        $this->taskExec('php-cs-fixer fix')->arg($directory)->run();
     }
 
     public function devTest()

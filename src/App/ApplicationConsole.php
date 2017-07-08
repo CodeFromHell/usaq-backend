@@ -2,6 +2,7 @@
 
 namespace USaq\App;
 
+use Consolidation\AnnotatedCommand\CommandFileDiscovery;
 use Psr\Container\ContainerInterface;
 use Robo\Application;
 use Robo\Common\ConfigAwareTrait;
@@ -12,7 +13,6 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use USaq\App\Command\DevelopmentCommands;
 use USaq\App\Command\TestCommands;
-use USaq\Service\Validation\ValidationService;
 
 class ApplicationConsole
 {
@@ -27,8 +27,8 @@ class ApplicationConsole
 
     public function __construct(
         Config $config,
-        InputInterface $input = NULL,
-        OutputInterface $output = NULL,
+        InputInterface $input = null,
+        OutputInterface $output = null,
         ContainerInterface $applicationContainer
     ) {
         // Create applicaton.
@@ -37,15 +37,21 @@ class ApplicationConsole
 
         // Create and configure container.
         $container = Robo::createDefaultContainer($input, $output, $application, $config);
+        // Add container application using delegate lookup
         $container->delegate($applicationContainer);
 
         // Instantiate Robo Runner.
         $this->runner = new Runner();
-
         $this->runner->setContainer($container);
+
+        // Add commands
+        $discovery = new CommandFileDiscovery();
+        $discovery->setSearchPattern('/.*Command(s){0,1}.php/');
+        $this->commands = $discovery->discover('src/App/Command', '\USaq\App\Command');
     }
 
-    public function run(InputInterface $input, OutputInterface $output) {
+    public function run(InputInterface $input, OutputInterface $output)
+    {
         $status_code = $this->runner->run($input, $output, null, $this->commands);
         return $status_code;
     }

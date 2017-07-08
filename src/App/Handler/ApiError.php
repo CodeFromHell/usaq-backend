@@ -2,7 +2,6 @@
 
 namespace USaq\App\Handler;
 
-
 use Crell\ApiProblem\ApiProblem;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;

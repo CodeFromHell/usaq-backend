@@ -44,6 +44,9 @@
     },
     "scripts": {
         "serve": "php -S 0.0.0.0:8000 -t public public/index.php",
-        "test": "codeception run"
+        "ser": "robo dev:serve",
+        "test": "robo dev:test",
+        "abc": "php app/console.php dev:test",
+        "fix": "php app/console.php dev:fix"
     }
 }

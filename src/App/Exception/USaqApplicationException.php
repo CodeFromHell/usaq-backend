@@ -23,7 +23,7 @@ abstract class USaqApplicationException extends \Exception
      *
      * @return array
      */
-    public final function getExtensionData(): array
+    final public function getExtensionData(): array
     {
         return $this->extensions;
     }

@@ -38,8 +38,9 @@ class TestCommands extends Tasks
 
         $message = 'Hello, ' . $name;
 
-        if ($options['yell'])
+        if ($options['yell']) {
             $message = strtoupper($message);
+        }
 
         $this->io()->text($message);
     }

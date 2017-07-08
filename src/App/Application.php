@@ -52,10 +52,11 @@ class Application extends App
 
             $builder->addDefinitions($serviceProvider->registerServices());
 
-            if ($environment == 'development')
+            if ($environment == 'development') {
                 $builder->addDefinitions($serviceProvider->registerServicesDevelopment());
-            elseif ($environment == 'test')
+            } elseif ($environment == 'test') {
                 $builder->addDefinitions($serviceProvider->registerServicesTest());
+            }
         }
 
         $builder->addDefinitions([
@@ -76,8 +77,9 @@ class Application extends App
     public function registerMiddlewares(array $middlewares)
     {
         foreach ($middlewares as $middleware) {
-            if (!is_callable($middleware) && !is_string($middleware))
+            if (!is_callable($middleware) && !is_string($middleware)) {
                 throw new \RuntimeException('Not a callable or string for container');
+            }
 
             $this->add($middleware);
         }
@@ -91,13 +93,14 @@ class Application extends App
     public function registerRoutes(array $routesProviders)
     {
         $this->group('/api', function () use ($routesProviders) {
-           foreach ($routesProviders as $routeProviderClassName) {
-               $routeProvider = new $routeProviderClassName();
-               if (!$routeProvider instanceof RoutesProviderInterface)
-                   throw new \RuntimeException('Not implements RoutesProviderInterface');
+            foreach ($routesProviders as $routeProviderClassName) {
+                $routeProvider = new $routeProviderClassName();
+                if (!$routeProvider instanceof RoutesProviderInterface) {
+                    throw new \RuntimeException('Not implements RoutesProviderInterface');
+                }
 
-               $routeProvider->registerRoutes($this);
-           }
+                $routeProvider->registerRoutes($this);
+            }
         });
     }
 }
