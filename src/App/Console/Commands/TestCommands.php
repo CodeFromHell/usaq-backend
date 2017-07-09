@@ -3,14 +3,16 @@
 namespace USaq\App\Console\Commands;
 
 use Doctrine\ORM\EntityManager;
-use Doctrine\ORM\Tools\Console\Command\SchemaTool\DropCommand;
+use Doctrine\ORM\Tools\Console\Command\MappingDescribeCommand;
 use Doctrine\ORM\Tools\Console\ConsoleRunner;
-use Doctrine\ORM\Tools\SchemaTool;
 use Robo\Robo;
 use Robo\Tasks;
 use USaq\Service\Validation\Exception\FieldValidationException;
 use USaq\Service\Validation\ValidationService;
 
+/**
+ * Test commands.
+ */
 class TestCommands extends Tasks
 {
     /**
@@ -18,17 +20,24 @@ class TestCommands extends Tasks
      */
     private $validationService;
 
+    /**
+     * TestCommands constructor.
+     *
+     * @param ValidationService $service
+     */
     public function __construct(ValidationService $service)
     {
         $this->validationService = $service;
     }
 
     /**
-     * @param string $name      Provide a name
+     * Testing console.
+     *
+     * @param string $name      Provide a name.
      * @param array $options
      * @option $yell            Yell the name!
      */
-    public function test($name, $options = ['yell|y' => false])
+    public function testSay($name, $options = ['yell|y' => false])
     {
         $this->io()->title('Testing application');
 
@@ -48,14 +57,19 @@ class TestCommands extends Tasks
         $this->io()->text($message);
     }
 
-    public function load($entityName)
+    /**
+     * Describe mapping of entity.
+     *
+     * @param string $entityName    Entity name.
+     */
+    public function testDescribe($entityName)
     {
         /** @var EntityManager $em */
         $em = Robo::getContainer()->get('persistence');
 
         $helper = ConsoleRunner::createHelperSet($em);
 
-        $command = new \Doctrine\ORM\Tools\Console\Command\MappingDescribeCommand();
+        $command = new MappingDescribeCommand();
         $command->setHelperSet($helper);
         $this->taskSymfonyCommand($command)->arg('entityName', $entityName)->run();
     }

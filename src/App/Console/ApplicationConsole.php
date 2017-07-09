@@ -12,14 +12,35 @@ use Robo\Runner;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
+/**
+ * Application class for console.
+ *
+ * Use {@link http://robo.li Robo} as framework.
+ */
 class ApplicationConsole
 {
     use ConfigAwareTrait;
 
+    /**
+     * @var Runner
+     */
     private $runner;
 
+    /**
+     * Commands for the runner.
+     *
+     * @var array
+     */
     private $commands = [];
 
+    /**
+     * ApplicationConsole constructor.
+     *
+     * @param Config $config
+     * @param InputInterface|null $input
+     * @param OutputInterface|null $output
+     * @param ContainerInterface $applicationContainer
+     */
     public function __construct(
         Config $config,
         InputInterface $input = null,
@@ -44,7 +65,7 @@ class ApplicationConsole
     }
 
     /**
-     * Register all commands from src/App/Commands on application
+     * Register all commands from src/App/Commands on application.
      */
     protected function registerCommands()
     {

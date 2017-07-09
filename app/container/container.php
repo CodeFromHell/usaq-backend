@@ -2,7 +2,7 @@
 /**
  * Bootstrap PSR-11 container and return it.
  *
- * Must return application in keys 'app' and '\Slim\App::class'.
+ * Must return application in keys 'app' and '\Slim\App::class' as alias of 'app'.
  */
 
 use USaq\App\Application;
