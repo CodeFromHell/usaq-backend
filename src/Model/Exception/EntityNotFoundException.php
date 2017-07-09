@@ -4,10 +4,13 @@ namespace USaq\Model\Exception;
 
 use USaq\App\Exception\USaqApplicationException;
 
+/**
+ * Thrown when entity is not found.
+ */
 class EntityNotFoundException extends USaqApplicationException
 {
     /**
-     * @inheritDoc
+     * @inheritdoc
      */
     public function getTitle(): string
     {

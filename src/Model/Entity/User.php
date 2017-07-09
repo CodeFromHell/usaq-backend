@@ -3,7 +3,9 @@
 namespace USaq\Model\Entity;
 
 /**
- * User
+ * User model.
+ *
+ * Represent user in the application.
  */
 class User
 {
@@ -51,7 +53,7 @@ class User
     }
 
     /**
-     * Get username
+     * Get username.
      *
      * @return string
      */

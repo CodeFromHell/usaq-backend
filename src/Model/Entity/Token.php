@@ -4,8 +4,6 @@ namespace USaq\Model\Entity;
 
 /**
  * Token model.
- *
- * @package USaq\Model\Entity
  */
 class Token
 {
@@ -92,7 +90,7 @@ class Token
     }
 
     /**
-     * Generate a random string token
+     * Generate a random string token.
      */
     public function generateRandomToken(): void
     {

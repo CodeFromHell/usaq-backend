@@ -8,10 +8,21 @@ use USaq\Model\Exception\EntityNotFoundException;
 use USaq\Service\AuthenticationService;
 use USaq\Service\Exception\UnauthorizedException;
 
+/**
+ * Middleware to control user authentication.
+ */
 class AuthenticationMiddleware
 {
+    /**
+     * @var AuthenticationService
+     */
     private $authService;
 
+    /**
+     * AuthenticationMiddleware constructor.
+     *
+     * @param AuthenticationService $authService
+     */
     public function __construct(AuthenticationService $authService)
     {
         $this->authService = $authService;
