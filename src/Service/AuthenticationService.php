@@ -83,6 +83,13 @@ class AuthenticationService
         return $token;
     }
 
+    /**
+     * Get user via token.
+     *
+     * @param string $tokenString       Token string.
+     * @return User                     User identified by token string.
+     * @throws EntityNotFoundException  If no user is found by this token.
+     */
     public function retrieveUserByToken(string $tokenString): User
     {
         $tokenRepository = $this->em->getRepository('USaq\Model\Entity\Token');
@@ -94,7 +101,32 @@ class AuthenticationService
             throw new EntityNotFoundException('Token not found');
         }
 
+        // Each time a token is retrieved update expiration date
+        $token->setExpireAt(new \DateTime('now + 15 days'));
+
         return $token->getUser();
+    }
+
+    public function logoutUser(string $tokenString): bool
+    {
+        $logoutCorrect = true;
+
+        try {
+            /** @var Token $token */
+            $token = $this->em->getRepository('USaq\Model\Entity\Token')->findOneBy(['tokenString' => $tokenString]);
+
+            if (!$token) {
+                throw new EntityNotFoundException('Token not found');
+            }
+
+            // Each time a token is retrieved update expiration date
+            $this->em->remove($token);
+            $this->em->flush();
+        } catch (\Exception $e) {
+            $logoutCorrect = false;
+        }
+
+        return $logoutCorrect;
     }
 
     public function checkIfUsernameExists(string $username): bool
