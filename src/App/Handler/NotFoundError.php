@@ -6,6 +6,9 @@ use Crell\ApiProblem\ApiProblem;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Http\Message\ResponseInterface as Response;
 
+/**
+ * Define not found error.
+ */
 class NotFoundError
 {
     public function __invoke(Request $request, Response $response)

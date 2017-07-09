@@ -5,10 +5,16 @@ namespace USaq\App\Exception;
 /**
  * Class USaqApplicationException.
  *
- * Base class for exceptions. Each implementation should add own information about error to extension property.
+ * Base class for exceptions. Each implementation should add own information about errors
+ * to {@see USaqApplicationException::extensions} property.
  */
 abstract class USaqApplicationException extends \Exception
 {
+    /**
+     * Extension to be added for each exception.
+     *
+     * @var array
+     */
     protected $extensions = [];
 
     /**

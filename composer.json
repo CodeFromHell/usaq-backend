@@ -43,8 +43,8 @@
         "process-timeout": 0
     },
     "scripts": {
-        "serve": "php -S 0.0.0.0:8000 -t public public/index.php",
-        "test": "php app/console.php development:test",
-        "fix": "php app/console.php development:fix"
+        "development:serve": "php -S 0.0.0.0:8000 -t public public/index.php",
+        "development:test": "php app/console.php development:test",
+        "development:fix": "php app/console.php development:fix"
     }
 }

@@ -6,6 +6,9 @@ use Crell\ApiProblem\ApiProblem;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Http\Message\ResponseInterface as Response;
 
+/**
+ * Define not allowed error.
+ */
 class NotAllowedError
 {
     public function __invoke(Request $request, Response $response, $allowed = null)

@@ -35,8 +35,14 @@ $app->registerMiddlewares([
 /* *********************************************** */
 /* *               Register Routes               * */
 /* *********************************************** */
-$app->registerRoutes([
-    \USaq\Routes\UserRoutes::class
+// Register routes
+//$app->registerRoutes([
+//    \USaq\Routes\UserRoutes::class
+//]);
+
+// Register routes on /api urls
+$app->registerApiRoutes([
+    \USaq\Routes\Api\UserRoutes::class
 ]);
 
 // Prepare Static Proxies

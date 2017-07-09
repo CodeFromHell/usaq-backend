@@ -10,6 +10,9 @@ use Psr\Container\ContainerInterface;
 use USaq\Provider\ServiceProviderInterface;
 use USaq\Routes\RoutesProviderInterface;
 
+/**
+ * Application class.
+ */
 class Application extends App
 {
     /**
@@ -92,15 +95,25 @@ class Application extends App
      */
     public function registerRoutes(array $routesProviders)
     {
-        $this->group('/api', function () use ($routesProviders) {
-            foreach ($routesProviders as $routeProviderClassName) {
-                $routeProvider = new $routeProviderClassName();
-                if (!$routeProvider instanceof RoutesProviderInterface) {
-                    throw new \RuntimeException('Not implements RoutesProviderInterface');
-                }
-
-                $routeProvider->registerRoutes($this);
+        foreach ($routesProviders as $routeProviderClassName) {
+            $routeProvider = new $routeProviderClassName();
+            if (!$routeProvider instanceof RoutesProviderInterface) {
+                throw new \RuntimeException('Not implements RoutesProviderInterface');
             }
+
+            $routeProvider->registerRoutes($this);
+        }
+    }
+
+    /**
+     * Register api routes.
+     *
+     * @param string[] $routesProviders
+     */
+    public function registerApiRoutes(array $routesProviders)
+    {
+        $this->group('/api', function () use ($routesProviders) {
+            $this->registerRoutes($routesProviders);
         });
     }
 }

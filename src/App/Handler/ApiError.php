@@ -8,10 +8,21 @@ use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Log\LoggerInterface;
 use USaq\App\Exception\USaqApplicationException;
 
+/**
+ * Class to define an application error.
+ */
 class ApiError
 {
+    /**
+     * @var LoggerInterface
+     */
     protected $logger;
 
+    /**
+     * ApiError constructor.
+     *
+     * @param LoggerInterface $logger
+     */
     public function __construct(LoggerInterface $logger)
     {
         $this->logger = $logger;
