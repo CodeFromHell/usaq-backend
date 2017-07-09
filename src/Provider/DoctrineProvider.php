@@ -12,6 +12,9 @@ use Doctrine\ORM\Mapping\Driver\SimplifiedYamlDriver;
 use Doctrine\ORM\Tools\Setup;
 use Psr\Container\ContainerInterface;
 
+/**
+ * Provide configuration for Doctrine service.
+ */
 class DoctrineProvider implements ServiceProviderInterface
 {
     /**

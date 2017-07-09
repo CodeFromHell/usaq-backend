@@ -12,10 +12,13 @@ use Monolog\Processor\PsrLogMessageProcessor;
 use Psr\Container\ContainerInterface;
 use Psr\Log\LoggerInterface;
 
+/**
+ * Provide logger service configuration.
+ */
 class LoggerProvider implements ServiceProviderInterface
 {
     /**
-     * @inheritDoc
+     * @inheritdoc
      */
     public function registerServices(): array
     {
@@ -45,7 +48,7 @@ class LoggerProvider implements ServiceProviderInterface
     }
 
     /**
-     * @inheritDoc
+     * @inheritdoc
      */
     public function registerServicesDevelopment(): array
     {
@@ -57,7 +60,7 @@ class LoggerProvider implements ServiceProviderInterface
     }
 
     /**
-     * @inheritDoc
+     * @inheritdoc
      */
     public function registerServicesTest(): array
     {

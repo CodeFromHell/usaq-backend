@@ -8,10 +8,13 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Tuupola\Middleware\Cors;
 
+/**
+ * Provides middleware configuration.
+ */
 class MiddlewareProvider implements ServiceProviderInterface
 {
     /**
-     * @inheritDoc
+     * @inheritdoc
      */
     public function registerServices(): array
     {
@@ -44,7 +47,7 @@ class MiddlewareProvider implements ServiceProviderInterface
     }
 
     /**
-     * @inheritDoc
+     * @inheritdoc
      */
     public function registerServicesDevelopment(): array
     {
@@ -52,7 +55,7 @@ class MiddlewareProvider implements ServiceProviderInterface
     }
 
     /**
-     * @inheritDoc
+     * @inheritdoc
      */
     public function registerServicesTest(): array
     {

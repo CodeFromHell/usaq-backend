@@ -9,10 +9,13 @@ use USaq\App\Handler\ApiError;
 use USaq\App\Handler\NotAllowedError;
 use USaq\App\Handler\NotFoundError;
 
+/**
+ * Provides basic settings information.
+ */
 class SettingsProvider implements ServiceProviderInterface
 {
     /**
-     * @inheritDoc
+     * @inheritdoc
      */
     public function registerServices(): array
     {
@@ -38,7 +41,7 @@ class SettingsProvider implements ServiceProviderInterface
     }
 
     /**
-     * @inheritDoc
+     * @inheritdoc
      */
     public function registerServicesDevelopment(): array
     {
@@ -48,7 +51,7 @@ class SettingsProvider implements ServiceProviderInterface
     }
 
     /**
-     * @inheritDoc
+     * @inheritdoc
      */
     public function registerServicesTest(): array
     {

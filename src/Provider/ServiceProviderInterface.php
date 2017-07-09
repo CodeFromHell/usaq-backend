@@ -2,6 +2,11 @@
 
 namespace USaq\Provider;
 
+/**
+ * Interface ServiceProviderInterface.
+ *
+ * All classes that provides services must implements this interface.
+ */
 interface ServiceProviderInterface
 {
     /**
