@@ -22,14 +22,16 @@ set('writable_dirs', []);
 
 
 // Hosts
-host('solus')
+host('solus-dev')
+    ->hostname('solus')
     ->stage('development')
     ->roles('app')
     ->set('deploy_path', '~/applications/usaq/production')
     ->set('branch', 'development')
     ->configFile('~/.ssh/config');
 
-host('solus')
+host('solus-prod')
+    ->hostname('solus')
     ->stage('production')
     ->roles('app')
     ->set('deploy_path', '~/applications/usaq/production')
