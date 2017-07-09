@@ -1,14 +1,9 @@
 <?php
-/**
- * Created by IntelliJ IDEA.
- * User: RJ Corchero
- * Date: 05/07/2017
- * Time: 21:37
- */
 
 namespace USaq\Routes;
 
 use USaq\App\Application;
+use USaq\Middleware\AuthenticationMiddleware;
 
 class UserRoutes implements RoutesProviderInterface
 {
@@ -20,7 +15,10 @@ class UserRoutes implements RoutesProviderInterface
         $app->group('/user', function () use ($app) {
             $app->post('/register', ['USaq\Controller\AuthenticationController', 'register']);
             $app->post('/login', ['USaq\Controller\AuthenticationController', 'login']);
-            $app->map(['POST', ], '/logout', ['USaq\Controller\AuthenticationController', 'logout']);
         });
+
+        $app->group('/user', function () use ($app) {
+            $app->post('/logout', ['USaq\Controller\AuthenticationController', 'logout']);
+        })->add(AuthenticationMiddleware::class);
     }
 }

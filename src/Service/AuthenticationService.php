@@ -5,6 +5,7 @@ namespace USaq\Service;
 use Doctrine\ORM\EntityManager;
 use USaq\Model\Entity\Token;
 use USaq\Model\Entity\User;
+use USaq\Model\Exception\AlreadyExistsException;
 use USaq\Model\Exception\EntityNotFoundException;
 use USaq\Service\Exception\AuthenticationException;
 
@@ -30,8 +31,19 @@ class AuthenticationService
         $this->em = $em;
     }
 
-    public function createUser($username, $password)
+    /**
+     * Create new user in application.
+     *
+     * @param string $username          Username.
+     * @param string $password          Password.
+     * @throws AlreadyExistsException   If there is already an user with the same username.
+     */
+    public function createUser(string $username, string $password)
     {
+        if ($this->checkIfUsernameExists($username)) {
+            throw new AlreadyExistsException(sprintf('There is already an User with the username %s', $username));
+        }
+
         $passwordHash = password_hash($password, PASSWORD_BCRYPT);
 
         $user = new User($username, $passwordHash);
@@ -41,7 +53,15 @@ class AuthenticationService
         $this->em->flush();
     }
 
-    public function loginUser($username, $password): Token
+    /**
+     * Checks if user exists and if credentials are correct.
+     *
+     * @param string $username          Username.
+     * @param string $password          Password.
+     * @return Token                    Token resource.
+     * @throws AuthenticationException  If user cannot be authenticated.
+     */
+    public function loginUser(string $username, string $password): Token
     {
         $userRepository = $this->em->getRepository('USaq\Model\Entity\User');
 
@@ -75,5 +95,12 @@ class AuthenticationService
         }
 
         return $token->getUser();
+    }
+
+    public function checkIfUsernameExists(string $username): bool
+    {
+        $user = $this->em->getRepository('USaq\Model\Entity\User')->findOneBy(['username' => $username]);
+
+        return (bool) $user;
     }
 }

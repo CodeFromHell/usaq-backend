@@ -19,6 +19,6 @@ class PruebaCest
         $I->sendPOST('/api/user/register', ['username' => 'abcdefg', 'password' => 'gato', 'password_repeat' => 'gato']);
         $I->seeResponseCodeIs(200);
         $I->seeResponseContainsJson(['result' => 'OK']);
-        $I->canSeeInRepository('\USaq\Model\Entity\User', ['username'=> 'abcdefg']);
+        $I->canSeeInRepository('\USaq\Model\Entity\User', ['username'=> 'abcdefg1']);
     }
 }

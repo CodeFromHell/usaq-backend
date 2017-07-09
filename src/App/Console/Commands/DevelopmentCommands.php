@@ -6,18 +6,28 @@ use Robo\Tasks;
 
 class DevelopmentCommands extends Tasks
 {
-    public function devServe()
+    public function developmentServe()
     {
         $this->taskServer()->dir('public')->background()->run();
     }
 
-    public function devFix($directory = 'src/Middleware')
+    public function developmentFix($directory = 'src')
     {
         $this->taskExec('php-cs-fixer fix')->arg($directory)->run();
     }
 
-    public function devTest()
+    public function developmentTest()
     {
         $this->taskCodecept()->run();
+    }
+
+    public function deploy()
+    {
+        $builder = $this->collectionBuilder();
+        $builder->addTaskList([
+                $this->taskCodecept(),
+                $this->taskExec('dep')->dir('vendor/bin')->arg('deploy')->arg('production')
+            ]
+        )->run();
     }
 }

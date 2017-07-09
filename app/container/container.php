@@ -27,10 +27,10 @@ $app = new Application();
 /* *********************************************** */
 // Register global application middlewares
 // Acts as LIFO queue, last added midleware is processed first
-/*$app->registerMiddlewares([
+$app->registerMiddlewares([
     \Tuupola\Middleware\Cors::class,
     \Gofabian\Negotiation\NegotiationMiddleware::class
-]);*/
+]);
 
 /* *********************************************** */
 /* *               Register Routes               * */
