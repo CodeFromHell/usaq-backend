@@ -24,16 +24,17 @@ class MiddlewareProvider implements ServiceProviderInterface
                     "logger" => $container->get('logger'),
                     "origin" => ["*"],
                     "methods" => ["GET", "POST", "PUT", "PATCH", "DELETE"],
-                    "headers.allow" => [],
+                    "headers.allow" => ["Accept", "Content-Type", "X-Auth-Token"],
                     "headers.expose" => [],
                     "cache" => 60,
                     "error" => function (ServerRequestInterface $request, ResponseInterface $response, $arguments) {
                         $data["status"] = "error";
                         $data["message"] = $arguments['message'];
+
+                        $response->getBody()->write(json_encode($data, JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT));
+
                         return $response
-                            ->withHeader("Content-Type", "application/json")
-                            ->getBody()
-                            ->write(json_encode($data, JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT));
+                            ->withHeader("Content-Type", "application/json");
                     }
                 ]);
             },
