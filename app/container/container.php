@@ -14,6 +14,7 @@ use USaq\StaticProxy\StaticProxy;
 // Register service providers for applications
 Application::registerServiceProviders([
     \USaq\Provider\SettingsProvider::class,
+    \USaq\Provider\TemplateEngineProvider::class,
     \USaq\Provider\LoggerProvider::class,
     \USaq\Provider\DoctrineProvider::class,
     \USaq\Provider\MiddlewareProvider::class

@@ -113,7 +113,7 @@ class AuthenticationService
 
         try {
             /** @var Token $token */
-            $token = $this->em->getRepository('USaq\Model\Entity\Token')->findOneBy(['tokenString' => $tokenString]);
+            $token = $this->em->getRepository('USaq\Model\Entity\Token')->findOneByTokenString($tokenString);
 
             if (!$token) {
                 throw new EntityNotFoundException('Token not found');

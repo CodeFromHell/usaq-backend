@@ -2,12 +2,12 @@
 
 namespace USaq\Controller;
 
-use Slim\Http\Response as Response;
+use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
-use Psr\Log\LoggerInterface;
 use USaq\Model\Entity\User;
 use USaq\Service\AuthenticationService;
 use USaq\Service\Validation\ValidationService;
+use USaq\Templating\EngineInterface;
 
 /**
  * Class AuthenticationController.
@@ -20,22 +20,22 @@ class AuthenticationController
 {
     private $authService;
 
-    private $logger;
-
     private $validator;
+
+    private $engine;
 
     /**
      * AuthenticationController constructor.
      *
      * @param AuthenticationService $authService
-     * @param LoggerInterface $logger
      * @param ValidationService $validator
+     * @param EngineInterface $engine
      */
-    public function __construct(AuthenticationService $authService, LoggerInterface $logger, ValidationService $validator)
+    public function __construct(AuthenticationService $authService,  ValidationService $validator, EngineInterface $engine)
     {
         $this->authService = $authService;
-        $this->logger = $logger;
         $this->validator = $validator;
+        $this->engine = $engine;
     }
 
     /**
@@ -51,9 +51,7 @@ class AuthenticationController
 
         $this->authService->createUser($body['username'], $body['password']);
 
-        $resource = ['result' => 'OK'];
-
-        return $response->withJson($resource);
+        return $response;
     }
 
     /**
@@ -69,9 +67,14 @@ class AuthenticationController
 
         $token = $this->authService->loginUser($body['username'], $body['password']);
 
-        $resource = ['token' => $token->getTokenString()];
+        $data = [
+            'resource' => $token,
+            'meta' => [
+                'actual_date' => (new \DateTime())->format('Y-m-d H:i:s')
+            ]
+        ];
 
-        return $response->withJson($resource);
+        return $this->engine->render('\USaq\Templating\Fractal\Transformers\TokenTransformer', $data, $response);
     }
 
     /**
@@ -81,15 +84,8 @@ class AuthenticationController
      */
     public function logout(Request $request, Response $response): Response
     {
-        /** @var User $user */
-        $user = $request->getAttribute('user');
-
         $this->authService->logoutUser($request->getHeader('X-Auth-Token')[0]);
 
-        $resource = [
-            'message' => sprintf('User %s has been logout', $user->getUsername())
-        ];
-
-        return $response->withJson($resource);
+        return $response;
     }
 }
