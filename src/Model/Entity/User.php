@@ -2,30 +2,46 @@
 
 namespace USaq\Model\Entity;
 
+use USaq\Model\Entity\Extensions\Timestampable;
+
 /**
  * User model.
  *
  * Represent user in the application.
+ *
+ * @Entity
+ * @Table(name="users")
+ * @HasLifecycleCallbacks
  */
 class User
 {
+    use Timestampable;
     /**
      * @var integer
+     *
+     * @Id @GeneratedValue
+     * @Column(type="integer")
      */
     private $id;
 
     /**
      * @var string
+     *
+     * @Column(type="string")
      */
     private $username;
 
     /**
      * @var string
+     *
+     * @Column(type="string")
      */
     private $password;
 
     /**
      * @var string
+     *
+     * @Column(type="string", nullable=true)
      */
     private $nickname;
 

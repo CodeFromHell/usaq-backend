@@ -4,26 +4,38 @@ namespace USaq\Model\Entity;
 
 /**
  * Token model.
+ *
+ * @Entity
+ * @Table(name="tokens")
  */
 class Token
 {
     /**
      * @var int
+     *
+     * @Id @GeneratedValue
+     * @Column(type="integer")
      */
     private $id;
 
     /**
      * @var User
+     *
+     * @ManyToOne(targetEntity="User", fetch="EAGER")
      */
     private $user;
 
     /**
      * @var string
+     *
+     * @Column(name="token_string", type="string")
      */
     private $tokenString;
 
     /**
      * @var \DateTime
+     *
+     * @Column(name="expire_at", type="datetime")
      */
     private $expireAt;
 

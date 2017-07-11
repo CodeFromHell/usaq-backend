@@ -2,15 +2,14 @@
 
 namespace USaq\Provider;
 
-use function DI\object;
-use function DI\string;
-use function DI\get;
-use function DI\env;
 use Doctrine\Common\Cache\FilesystemCache;
 use Doctrine\ORM\EntityManager;
-use Doctrine\ORM\Mapping\Driver\SimplifiedYamlDriver;
 use Doctrine\ORM\Tools\Setup;
 use Psr\Container\ContainerInterface;
+use function DI\env;
+use function DI\get;
+use function DI\object;
+use function DI\string;
 
 /**
  * Provide configuration for Doctrine service.
@@ -42,18 +41,20 @@ class DoctrineProvider implements ServiceProviderInterface
             EntityManager::class => function (ContainerInterface $c) {
                 $isDevMode = getenv('APP_ENV') !== 'production';
 
-                if ($isDevMode) {
-                    $config = Setup::createConfiguration($isDevMode);
-                } else {
-                    $config = Setup::createConfiguration($isDevMode, $c->get('dir.cache.proxies'), $c->get('cache'));
-                }
-
-                $namespaces = [
-                    $c->get('dir.src.entities') . '/config' => 'USaq\Model\Entity'
+                $paths = [
+                    $c->get('dir.src.entities')
                 ];
 
-                $driver = new SimplifiedYamlDriver($namespaces);
-                $config->setMetadataDriverImpl($driver);
+                if ($isDevMode) {
+                    $config = Setup::createAnnotationMetadataConfiguration($paths, $isDevMode);
+                } else {
+                    $config = Setup::createAnnotationMetadataConfiguration(
+                        $paths,
+                        $isDevMode,
+                        $c->get('dir.cache.proxies'),
+                        $c->get('cache')
+                    );
+                }
 
                 return EntityManager::create($c->get('database.parameters'), $config);
             },
