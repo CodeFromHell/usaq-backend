@@ -31,7 +31,7 @@ class AuthenticationController
      * @param ValidationService $validator
      * @param EngineInterface $engine
      */
-    public function __construct(AuthenticationService $authService,  ValidationService $validator, EngineInterface $engine)
+    public function __construct(AuthenticationService $authService, ValidationService $validator, EngineInterface $engine)
     {
         $this->authService = $authService;
         $this->validator = $validator;

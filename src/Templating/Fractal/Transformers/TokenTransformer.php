@@ -12,7 +12,8 @@ class TokenTransformer extends TransformerAbstract
         'user'
     ];
 
-    public function transform(Token $token) {
+    public function transform(Token $token)
+    {
         return [
             'token' => $token->getTokenString()
         ];
