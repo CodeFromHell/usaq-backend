@@ -3,10 +3,12 @@
 namespace USaq\Provider;
 
 use function DI\object;
-use USaq\Templating\EngineInterface;
-use USaq\Templating\Fractal\FractalEngine;
+use USaq\Services\UserServices\AuthenticationService;
+use USaq\Services\UserServices\AuthenticationServiceDb;
+use USaq\Services\UserServices\UserService;
+use USaq\Services\UserServices\UserServiceDb;
 
-class TemplateEngineProvider implements ServiceProviderInterface
+class UserServicesProvider implements ServiceProviderInterface
 {
     /**
      * @inheritDoc
@@ -14,7 +16,8 @@ class TemplateEngineProvider implements ServiceProviderInterface
     public function registerServices(): array
     {
         return [
-            EngineInterface::class => object(FractalEngine::class)
+            UserService::class => object(UserServiceDb::class),
+            AuthenticationService::class => object(AuthenticationServiceDb::class)
         ];
     }
 

@@ -11,11 +11,13 @@ use Monolog\Logger;
 use Monolog\Processor\PsrLogMessageProcessor;
 use Psr\Container\ContainerInterface;
 use Psr\Log\LoggerInterface;
+use USaq\Templating\EngineInterface;
+use USaq\Templating\Fractal\FractalEngine;
 
 /**
  * Provide logger service configuration.
  */
-class LoggerProvider implements ServiceProviderInterface
+class ApplicationServicesProvider implements ServiceProviderInterface
 {
     /**
      * @inheritdoc
@@ -43,7 +45,12 @@ class LoggerProvider implements ServiceProviderInterface
                 $logger->pushProcessor(new PsrLogMessageProcessor());
 
                 return $logger;
-            }
+            },
+
+            /**
+             * Rendering engine
+             */
+            EngineInterface::class => object(FractalEngine::class)
         ];
     }
 

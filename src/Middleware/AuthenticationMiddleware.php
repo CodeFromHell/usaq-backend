@@ -5,8 +5,8 @@ namespace USaq\Middleware;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use USaq\Model\Exception\EntityNotFoundException;
-use USaq\Service\AuthenticationService;
-use USaq\Service\Exception\UnauthorizedException;
+use USaq\Services\UserServices\AuthenticationService;
+use USaq\Services\UserServices\Exception\UnauthorizedException;
 
 /**
  * Middleware to control user authentication.

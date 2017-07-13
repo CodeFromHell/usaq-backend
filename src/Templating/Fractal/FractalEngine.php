@@ -17,6 +17,7 @@ use USaq\Templating\Exception\TemplateEngineException;
  * - 'resource' => Resource to be rendered.
  * - 'include' => Data to be include from the available includes defined in the template.
  * - 'exclude' => Data to be exclude from the default includes defined in the template.
+ * - 'meta' => Data to be included as metadata.
  */
 class FractalEngine implements EngineInterface
 {

@@ -23,6 +23,7 @@ class UserRoutes implements RoutesProviderInterface
 
         $app->group('/user', function () use ($app) {
             $app->post('/logout', ['USaq\Controller\AuthenticationController', 'logout']);
+            $app->get('/{identifier:[0-9]+}/list', ['USaq\Controller\UserController', 'list']);
         })->add(AuthenticationMiddleware::class);
     }
 }

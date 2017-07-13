@@ -7,8 +7,8 @@ use Doctrine\ORM\Tools\Console\Command\MappingDescribeCommand;
 use Doctrine\ORM\Tools\Console\ConsoleRunner;
 use Robo\Robo;
 use Robo\Tasks;
-use USaq\Service\Validation\Exception\FieldValidationException;
-use USaq\Service\Validation\ValidationService;
+use USaq\Services\Validation\Exception\FieldValidationException;
+use USaq\Services\Validation\ValidationService;
 
 /**
  * Test commands.
@@ -40,6 +40,20 @@ class TestCommands extends Tasks
     public function testSay($name, $options = ['yell|y' => false])
     {
         $this->io()->title('Testing application');
+
+        $a = new \stdClass();
+        $a->id =1;
+
+        $b = new \stdClass();
+        $b->id = 2;
+
+        $arr = [$a, $b];
+
+        $arr1 = array_map(function($element) {
+            return $element->id;
+        }, $arr);
+
+        $this->io()->write(print_r($arr1, true));
 
         try {
             $this->validationService->validateLoginRequest(['asdad' => 'asddas']);

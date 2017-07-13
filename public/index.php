@@ -1,4 +1,6 @@
 <?php
+date_default_timezone_set('Europe/Madrid');
+$local = setlocale(LC_TIME, 'es_ES.utf8');
 
 // To help the built-in PHP dev server, check if the request was actually for
 // something which should probably be served as a static file

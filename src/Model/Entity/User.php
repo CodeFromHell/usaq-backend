@@ -9,13 +9,14 @@ use USaq\Model\Entity\Extensions\Timestampable;
  *
  * Represent user in the application.
  *
- * @Entity
+ * @Entity(repositoryClass="USaq\Model\Repository\UserRepository")
  * @Table(name="users")
  * @HasLifecycleCallbacks
  */
 class User
 {
     use Timestampable;
+
     /**
      * @var integer
      *

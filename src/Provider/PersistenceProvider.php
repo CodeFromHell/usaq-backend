@@ -14,7 +14,7 @@ use function DI\string;
 /**
  * Provide configuration for Doctrine service.
  */
-class DoctrineProvider implements ServiceProviderInterface
+class PersistenceProvider implements ServiceProviderInterface
 {
     /**
      * @inheritDoc

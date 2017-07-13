@@ -1,6 +1,6 @@
 <?php
 
-namespace USaq\Service\Validation\Exception;
+namespace USaq\Services\Validation\Exception;
 
 use USaq\App\Exception\USaqApplicationException;
 

@@ -1,10 +1,10 @@
 <?php
 
-namespace USaq\Service\Validation;
+namespace USaq\Services\Validation;
 
 use Respect\Validation\Exceptions\NestedValidationException;
 use Respect\Validation\Validator as V;
-use USaq\Service\Validation\Exception\FieldValidationException;
+use USaq\Services\Validation\Exception\FieldValidationException;
 
 class ValidationService
 {

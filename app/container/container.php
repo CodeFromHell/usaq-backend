@@ -9,15 +9,15 @@ use USaq\App\Application;
 use USaq\StaticProxy\StaticProxy;
 
 /* *********************************************** */
-/* *        Register Service Providers           * */
+/* *        Register Services Providers           * */
 /* *********************************************** */
 // Register service providers for applications
 Application::registerServiceProviders([
     \USaq\Provider\SettingsProvider::class,
-    \USaq\Provider\TemplateEngineProvider::class,
-    \USaq\Provider\LoggerProvider::class,
-    \USaq\Provider\DoctrineProvider::class,
-    \USaq\Provider\MiddlewareProvider::class
+    \USaq\Provider\ApplicationServicesProvider::class,
+    \USaq\Provider\PersistenceProvider::class,
+    \USaq\Provider\MiddlewareProvider::class,
+    \USaq\Provider\UserServicesProvider::class
 ]);
 
 // Instantiate the app

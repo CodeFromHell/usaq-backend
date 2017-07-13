@@ -31,6 +31,7 @@ class ApiError
     public function __invoke(Request $request, Response $response, \Throwable $throwable)
     {
         $this->logger->critical($throwable->getMessage());
+        $this->logger->critical(json_encode($throwable->getTrace(), JSON_UNESCAPED_SLASHES));
 
         if ($throwable instanceof USaqApplicationException) {
             $problem = $this->generateSpecificApiProblem($throwable);
@@ -53,7 +54,7 @@ class ApiError
     {
         $problem = new ApiProblem('Internal error', "about:blank");
         $problem->setDetail('An internal error has occurred. ');
-        $problem->setStatus($e->getCode() ?: 500);
+        $problem->setStatus(500);
 
         return $problem;
     }
@@ -62,7 +63,7 @@ class ApiError
     {
         $problem = new ApiProblem('General error', "about:blank");
         $problem->setDetail('An error has occurred due to request. Please retry in a few minutes.');
-        $problem->setStatus($status = $e->getCode() ?: 400);
+        $problem->setStatus($e->getCode() >= 100 ? $e->getCode() : 400);
 
         return $problem;
     }
@@ -71,7 +72,7 @@ class ApiError
     {
         $problem = new ApiProblem($e->getTitle(), "about:blank");
         $problem->setDetail($e->getMessage());
-        $problem->setStatus($status = $e->getCode() ?: 400);
+        $problem->setStatus($e->getCode() >= 100 ? $e->getCode() : 400);
 
         foreach ($e->getExtensionData() as $key => $value) {
             $problem[$key] = $value;

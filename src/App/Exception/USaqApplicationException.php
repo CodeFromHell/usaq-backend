@@ -10,6 +10,8 @@ namespace USaq\App\Exception;
  */
 abstract class USaqApplicationException extends \Exception
 {
+    protected $code = 400;
+
     /**
      * Extension to be added for each exception.
      *

@@ -1,6 +1,6 @@
 <?php
 
-namespace USaq\Service\Exception;
+namespace USaq\Services\UserServices\Exception;
 
 use USaq\App\Exception\USaqApplicationException;
 
