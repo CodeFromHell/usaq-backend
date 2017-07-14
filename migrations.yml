@@ -1,0 +1,4 @@
+name: USaq Migrations
+migrations_namespace: USaq\Migrations
+table_name: doctrine_migration_versions
+migrations_directory: /src/Migrations

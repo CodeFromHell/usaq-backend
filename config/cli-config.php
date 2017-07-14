@@ -9,4 +9,17 @@ require __DIR__ . '/../app/bootstrap.php';
 // replace with mechanism to retrieve EntityManager in your app
 $entityManager = Container::get('persistence');
 
-return ConsoleRunner::createHelperSet($entityManager);
+$helperSet = ConsoleRunner::createHelperSet($entityManager);
+$helperSet->set(new \Symfony\Component\Console\Helper\QuestionHelper(), 'dialog');
+
+// Add Doctrine Migration commands
+$cli = ConsoleRunner::createApplication($helperSet,[
+    new \Doctrine\DBAL\Migrations\Tools\Console\Command\DiffCommand(),
+    new \Doctrine\DBAL\Migrations\Tools\Console\Command\ExecuteCommand(),
+    new \Doctrine\DBAL\Migrations\Tools\Console\Command\GenerateCommand(),
+    new \Doctrine\DBAL\Migrations\Tools\Console\Command\MigrateCommand(),
+    new \Doctrine\DBAL\Migrations\Tools\Console\Command\StatusCommand(),
+    new \Doctrine\DBAL\Migrations\Tools\Console\Command\VersionCommand(),
+]);
+
+return $cli->run();
