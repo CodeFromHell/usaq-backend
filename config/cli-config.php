@@ -10,7 +10,7 @@ require __DIR__ . '/../app/bootstrap.php';
 $entityManager = Container::get('persistence');
 
 $helperSet = ConsoleRunner::createHelperSet($entityManager);
-$helperSet->set(new \Symfony\Component\Console\Helper\QuestionHelper(), 'dialog');
+$helperSet->set(new \Symfony\Component\Console\Helper\QuestionHelper(), 'question');
 
 // Add Doctrine Migration commands
 $cli = ConsoleRunner::createApplication($helperSet,[

@@ -66,3 +66,8 @@ task('deploy', [
 
 // [Optional] if deploy fails automatically unlock.
 after('deploy:failed', 'deploy:unlock');
+
+desc('Run migrations');
+task('deploy:run-migrations',function () {
+   run('{{bin/php}}');
+});

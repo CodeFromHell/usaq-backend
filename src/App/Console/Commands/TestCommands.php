@@ -49,7 +49,7 @@ class TestCommands extends Tasks
 
         $arr = [$a, $b];
 
-        $arr1 = array_map(function($element) {
+        $arr1 = array_map(function ($element) {
             return $element->id;
         }, $arr);
 

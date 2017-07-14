@@ -77,7 +77,7 @@ class UserServiceDb implements UserService
      */
     public function getAllExcept(array $users): array
     {
-        $userIds = array_map(function($user) {
+        $userIds = array_map(function ($user) {
             if ($user instanceof User) {
                 return $user->getId();
             } else {
