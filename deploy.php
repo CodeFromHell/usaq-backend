@@ -19,7 +19,6 @@ set('shared_files', [
 
 set('writable_dirs', []);
 
-
 // Hosts
 host('solus-dev')
     ->hostname('solus')
@@ -49,7 +48,7 @@ task('php-fpm:restart', function () {
 
 desc('Run migrations');
 task('deploy:run_migrations',function () {
-    run('{{bin/php}} {{release_path}}/app/console.php database:migrate latest');
+    run('cd {{release_path}} && {{bin/php}} ./app/console.php database:migrate');
 });
 after('deploy:clear_paths', 'deploy:run_migrations');
 
