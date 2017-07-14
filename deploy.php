@@ -10,7 +10,6 @@ set('git_tty', false); // [Optional] Allocate tty for git on first deployment
 
 // Dirs
 set('shared_dirs', [
-    'logs',
     'storage'
 ]);
 
@@ -48,6 +47,12 @@ task('php-fpm:restart', function () {
 });
 //after('deploy:symlink', 'php-fpm:restart');
 
+desc('Run migrations');
+task('deploy:run_migrations',function () {
+    run('{{bin/php}} {{release_path}}/app/console.php database:migrate latest');
+});
+after('deploy:clear_paths', 'deploy:run_migrations');
+
 desc('Deploy your project');
 task('deploy', [
     'deploy:prepare',
@@ -66,8 +71,3 @@ task('deploy', [
 
 // [Optional] if deploy fails automatically unlock.
 after('deploy:failed', 'deploy:unlock');
-
-desc('Run migrations');
-task('deploy:run-migrations',function () {
-   run('{{bin/php}}');
-});

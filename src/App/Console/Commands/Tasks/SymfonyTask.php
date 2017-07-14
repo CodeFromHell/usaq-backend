@@ -8,7 +8,7 @@ use Robo\Task\Base\SymfonyCommand;
 use Symfony\Component\Console\Input\ArrayInput;
 
 /**
- * COverride SymfonyCommnand task from Robo package.
+ * Override SymfonyCommnand task from Robo package.
  *
  * Provide no interactive run of commands.
  */
