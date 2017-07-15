@@ -31,6 +31,7 @@ class LoggedUserTester extends \Test\FunctionalTester
         $I = $this;
         $I->persistEntity($this->myself);
         $I->sendPOST('/api/user/login', ['username' => 'logged', 'password' => 'password']);
+        error_log($I->grabResponse());
         $I->seeResponseCodeIs(200);
         $response = $I->grabResponse();
         $responseArray = json_decode($response, true);

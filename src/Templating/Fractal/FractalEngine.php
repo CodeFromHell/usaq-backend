@@ -18,6 +18,8 @@ use USaq\Templating\Exception\TemplateEngineException;
  * - 'include' => Data to be include from the available includes defined in the template.
  * - 'exclude' => Data to be exclude from the default includes defined in the template.
  * - 'meta' => Data to be included as metadata.
+ * - 'isCollection' => true Force resource to be used as collection of items.
+ * - 'isItem' => true Force data to be used as one item.
  */
 class FractalEngine implements EngineInterface
 {
@@ -106,10 +108,16 @@ class FractalEngine implements EngineInterface
      */
     private function createResource($template, array $data)
     {
-        if (is_array($data['resource'])) {
+        if (isset($data['isCollection']) && $data['isCollection']) {
             $resource = new Collection($data['resource'], new $template());
-        } else {
+        } elseif (isset($data['isItem']) && $data['isItem']) {
             $resource = new Item($data['resource'], new $template());
+        } else {
+            if (is_array($data['resource'])) {
+                $resource = new Collection($data['resource'], new $template());
+            } else {
+                $resource = new Item($data['resource'], new $template());
+            }
         }
 
         if (isset($data['meta']) && is_array($data['meta'])) {
