@@ -30,6 +30,7 @@ class ErrorInformation
          */
         self::USER_AUTHENTICATION_ERROR['error_code'] => self::USER_AUTHENTICATION_ERROR,
         self::USER_UNAUTHORIZED_ERROR['error_code'] => self::USER_UNAUTHORIZED_ERROR,
+        self::USER_PERMISSION_ERROR['error_code'] => self::USER_PERMISSION_ERROR,
 
         /**
          * Template engine errors from Templating
@@ -48,6 +49,7 @@ class ErrorInformation
 
     const USER_AUTHENTICATION_ERROR = ['error_code' => 110, 'description' => 'Error authentication user'];
     const USER_UNAUTHORIZED_ERROR = ['error_code' => 111, 'description' => 'User is no authorized to see this resource'];
+    const USER_PERMISSION_ERROR = ['error_code' => 112, 'description' => 'User has no permission to act on this resource'];
 
     const TEMPLATE_ERROR = ['error_code' => 300, 'description' => 'Error renderizing data'];
 }

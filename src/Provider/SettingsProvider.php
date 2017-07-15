@@ -30,7 +30,7 @@ class SettingsProvider implements ServiceProviderInterface
             'dir.database' => string('{dir.storage}/database'),
             'dir.logs' => string('{dir.storage}/logs'),
 
-            'settings.determineRouteBeforeAppMiddleware' => false,
+            'settings.determineRouteBeforeAppMiddleware' => true,
             'settings.displayErrorDetails' => false,
 
             // Handlers

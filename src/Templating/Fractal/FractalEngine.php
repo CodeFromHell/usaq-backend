@@ -113,7 +113,7 @@ class FractalEngine implements EngineInterface
         } elseif (isset($data['isItem']) && $data['isItem']) {
             $resource = new Item($data['resource'], new $template());
         } else {
-            if (is_array($data['resource'])) {
+            if ($data['resource'] instanceof \Traversable || is_array($data['resource'])) {
                 $resource = new Collection($data['resource'], new $template());
             } else {
                 $resource = new Item($data['resource'], new $template());

@@ -4,6 +4,7 @@ namespace USaq\Services\UserServices;
 
 use Doctrine\ORM\EntityManager;
 use USaq\Model\Entity\User;
+use USaq\Model\Exception\EntityNotFoundException;
 use USaq\Model\Repository\UserRepository;
 
 /**
@@ -89,5 +90,53 @@ class UserServiceDb implements UserService
         $userRepository = $this->em->getRepository(User::class);
 
         return $userRepository->getAllExcept($userIds);
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getUserFriends(int $userIdentifier)
+    {
+        /** @var User $user */
+        $user = $this->em->find(User::class, $userIdentifier);
+
+        return $user->getAllFriends();
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function addFriendForUser(int $userIdentifier, int $friendIdentifier): void
+    {
+        /** @var User $user */
+        $user = $this->em->find(User::class, $userIdentifier);
+
+        /** @var User $friend */
+        $friend = $this->em->find(User::class, $friendIdentifier);
+
+        if ($friend === null) {
+            throw new EntityNotFoundException(sprintf('There is no user with identifier %d', $friendIdentifier));
+        }
+
+        $user->addFriend($friend);
+        $this->em->flush();
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function removeFriendForUser(int $userIdentifier, int $friendIdentifier): void
+    {
+        /** @var User $user */
+        $user = $this->em->find(User::class, $userIdentifier);
+        /** @var User $friend */
+        $friend = $this->em->find(User::class, $friendIdentifier);
+
+        if ($friend === null) {
+            throw new EntityNotFoundException(sprintf('There is no user with identifier %d', $friendIdentifier));
+        }
+
+        $user->removeFriend($friend);
+        $this->em->flush();
     }
 }

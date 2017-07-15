@@ -2,6 +2,8 @@
 
 namespace USaq\Model\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use USaq\Model\Entity\Extensions\Timestampable;
 
 /**
@@ -47,6 +49,18 @@ class User
     private $nickname;
 
     /**
+     * Many Users have many Users as friends.
+     *
+     * @ManyToMany(targetEntity="User")
+     * @JoinTable(
+     *     name="users_friends",
+     *     joinColumns={@JoinColumn(name="user_id", referencedColumnName="id")},
+     *     inverseJoinColumns={@JoinColumn(name="friend_user_id", referencedColumnName="id")}
+     * )
+     */
+    private $friends;
+
+    /**
      * User constructor.
      *
      * @param string $username
@@ -56,8 +70,8 @@ class User
     {
         $this->username = $username;
         $this->password = $password;
+        $this->friends = new ArrayCollection();
     }
-
 
     /**
      * Get id.
@@ -133,5 +147,37 @@ class User
     {
         $this->nickname = $nickname;
         return $this;
+    }
+
+    /**
+     * Add new friend to user.
+     *
+     * @param User $friend
+     */
+    public function addFriend(User $friend): void
+    {
+        if (!$this->friends->contains($friend)) {
+            $this->friends->add($friend);
+        }
+    }
+
+    /**
+     * Removes friend.
+     *
+     * @param $friend
+     */
+    public function removeFriend(User $friend): void
+    {
+        $this->friends->removeElement($friend);
+    }
+
+    /**
+     * Return all friends from user.
+     *
+     * @return Collection
+     */
+    public function getAllFriends()
+    {
+        return $this->friends;
     }
 }

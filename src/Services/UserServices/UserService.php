@@ -4,6 +4,7 @@ namespace USaq\Services\UserServices;
 
 use Doctrine\Common\Collections\Collection;
 use USaq\Model\Entity\User;
+use USaq\Model\Exception\EntityNotFoundException;
 
 /**
  * Interface UserService provides operations to store and retrieve Users.
@@ -49,4 +50,30 @@ interface UserService
      * @return User[]
      */
     public function getAllExcept(array $users): array;
+
+    /**
+     * Get user friends.
+     *
+     * @param int $userIdentifier       User identifiers.
+     * @return mixed
+     */
+    public function getUserFriends(int $userIdentifier);
+
+    /**
+     * Add friend to user.
+     *
+     * @param int $userIdentifier       User identifier.
+     * @param int $friendIdentifier     Friend identifier.
+     * @throws EntityNotFoundException  If there is no user with friendIdentifier as id.
+     */
+    public function addFriendForUser(int $userIdentifier, int $friendIdentifier): void;
+
+    /**
+     * Remove friend of user.
+     *
+     * @param int $userIdentifier       User identifier.
+     * @param int $friendIdentifier     Friend identifier.
+     * @throws EntityNotFoundException  If there is no user with friendIdentifier as id.
+     */
+    public function removeFriendForUser(int $userIdentifier, int $friendIdentifier): void;
 }

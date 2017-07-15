@@ -63,4 +63,21 @@ class ValidationService
             throw $exception;
         }
     }
+
+    /**
+     * @param $data
+     * @throws FieldValidationException
+     */
+    public function validateFriendDataRequest($data): void
+    {
+        try {
+            V::key('friend_id', V::intVal()->positive())->assert($data);
+        } catch (NestedValidationException $e) {
+            $errors = $e->getMessages();
+
+            $exception = new FieldValidationException('Field validation error');
+            $exception->addFieldsErrors($errors);
+            throw $exception;
+        }
+    }
 }
