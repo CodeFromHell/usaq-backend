@@ -73,6 +73,7 @@ class ApiError
         $problem = new ApiProblem($e->getTitle(), "about:blank");
         $problem->setDetail($e->getMessage());
         $problem->setStatus($e->getCode() >= 100 ? $e->getCode() : 400);
+        $problem['error_code'] = $e->getErrorInformation()['error_code'];
 
         foreach ($e->getExtensionData() as $key => $value) {
             $problem[$key] = $value;

@@ -2,16 +2,28 @@
 
 namespace USaq\Services\Validation\Exception;
 
+use USaq\App\Exception\ErrorInformation;
 use USaq\App\Exception\USaqApplicationException;
 
+/**
+ * Thrown when there an error in a field validation.
+ */
 class FieldValidationException extends USaqApplicationException
 {
     /**
-     * @inheritDoc
+     * @inheritdoc
      */
     public function getTitle(): string
     {
         return 'Validation error';
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getErrorInformation(): array
+    {
+        return ErrorInformation::VALIDATION_FIELD_ERROR;
     }
 
     /**

@@ -27,6 +27,15 @@ abstract class USaqApplicationException extends \Exception
     abstract public function getTitle(): string;
 
     /**
+     * Returns error information.
+     *
+     * @return array
+     *
+     * @see ErrorInformation
+     */
+    abstract public function getErrorInformation(): array;
+
+    /**
      * Return extension data.
      *
      * @return array
