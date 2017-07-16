@@ -1,6 +1,6 @@
 <?php
 
-namespace Test\UsersActionsTest;
+namespace Test\UserActions;
 
 use Test\FunctionalTester;
 use USaq\Model\Entity\User;

@@ -1,5 +1,5 @@
 <?php
-namespace Test\UsersActionsTest;
+namespace Test\UserActions;
 use Test\FunctionalTester;
 use Test\Step\Functional\LoggedUserTester;
 use USaq\Model\Entity\User;
@@ -18,7 +18,7 @@ class UserActionsCest
     {
         $user = new User('nombre', 'password');
         $I->persistEntity($user);
-        $I->sendGET("/api/user/{$user->getId()}/list");
+        $I->sendGET("/api/user/{$user->getId()}/all");
         $I->seeResponseCodeIs(401);
     }
 
@@ -29,7 +29,7 @@ class UserActionsCest
 
         $I->loginInApplication();
         $I->haveHttpHeader('X-Auth-Token', $I->haveToken());
-        $I->sendGET("/api/user/{$I->amUser()->getId()}/list");
+        $I->sendGET("/api/user/{$I->amUser()->getId()}/all");
         $I->seeResponseCodeIs(200);
         $I->seeResponseIsJson();
         $I->seeResponseContainsJson(['meta' => ['count' => $totalUsers]]);
