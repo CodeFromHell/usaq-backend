@@ -30,8 +30,8 @@ class FriendsSteps
     {
         /** @var User $user */
         $user = $this->I->grabEntityFromRepository(User::class, ['username' => $username]);
-        $this->I->amUser()->addFriend($user);
-        $this->I->persistEntity($this->I->amUser());
+        $this->I->haveHttpHeader('X-Auth-Token', $this->I->haveToken());
+        $this->I->sendPOST("/api/user/{$this->I->amUser()->getId()}/friends", ['friend_id' => $user->getId()]);
     }
 
     /**
@@ -68,7 +68,7 @@ class FriendsSteps
     {
         /** @var User $user */
         $user = $this->I->grabEntityFromRepository(User::class, ['username' => $username]);
-        $this->I->amUser()->removeFriend($user);
-        $this->I->persistEntity($this->I->amUser());
+        $this->I->haveHttpHeader('X-Auth-Token', $this->I->haveToken());
+        $this->I->sendDELETE("/api/user/{$this->I->amUser()->getId()}/friends", ['friend_id' => $user->getId()]);
     }
 }
