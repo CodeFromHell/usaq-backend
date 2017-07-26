@@ -12,7 +12,7 @@ try {
 }
 
 // Require container
-$container = require __DIR__ . '/../../app/container/container.php';
+$container = require __DIR__ . '/../../config/container/container.php';
 
 // Return container
 return $container;

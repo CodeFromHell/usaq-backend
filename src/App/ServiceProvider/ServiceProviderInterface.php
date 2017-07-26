@@ -1,6 +1,6 @@
 <?php
 
-namespace USaq\Provider;
+namespace USaq\App\ServiceProvider;
 
 /**
  * Interface ServiceProviderInterface.

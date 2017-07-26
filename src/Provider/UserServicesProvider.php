@@ -3,6 +3,7 @@
 namespace USaq\Provider;
 
 use function DI\object;
+use USaq\App\ServiceProvider\ServiceProviderInterface;
 use USaq\Services\UserServices\AuthenticationService;
 use USaq\Services\UserServices\AuthenticationServiceDb;
 use USaq\Services\UserServices\UserService;

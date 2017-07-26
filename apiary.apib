@@ -1,0 +1,70 @@
+FORMAT: 1A
+HOST: http://usaq.solus.hol.es/api
+
+# USaq Application API
+
+Application to launch insults to your friends. Who don't want to do that??
+
+# Group User
+
+## User register [/questions]
+
+### Register an user [POST]
+
+To register an user on application.
+
++ Request (application/json)
+
+        {
+            "username": "CoolName",
+            "password": "1234abcd",
+            "password_repeat": "1234abcd" 
+        }
+
++ Response 200 (application/json)
+
++ Response 400 (application/json)
+
+        {
+            "error_code": 1,
+            "title": "Entity already exists",
+            "type": "about:blank",
+            "status": 400,
+            "detail": "There is already an User with the username CoolName"
+        }
+
+### Login an user [POST]
+
+Log in the application.
+
++ Request (application/json)
+
+        {
+            "username": "CoolName",
+            "password": "1234abcd"
+        }
+
++ Response 200 (application/json)
+
++ Response 400 (application/json)
+
+        {
+            "error_code": 1,
+            "title": "Entity already exists",
+            "type": "about:blank",
+            "status": 400,
+            "detail": "There is already an User with the username CoolName"
+        }
+ 
++ Response 400 (application/json)
+
+        {
+            "error_code": 11,
+            "fields": [
+                "Must have keys { \"username\", \"password\" }"
+            ],
+            "title": "Validation error",
+            "type": "about:blank",
+            "status": 400,
+            "detail": "Login validation error"
+        }

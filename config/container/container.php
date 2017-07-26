@@ -7,45 +7,38 @@
 
 use USaq\App\Application;
 use USaq\StaticProxy\StaticProxy;
+use USaq\App\ServiceProvider\ServiceProviderManager;
 
 /* *********************************************** */
 /* *        Register Services Providers           * */
 /* *********************************************** */
 // Register service providers for applications
-Application::registerServiceProviders([
-    \USaq\Provider\SettingsProvider::class,
-    \USaq\Provider\ApplicationServicesProvider::class,
-    \USaq\Provider\PersistenceProvider::class,
-    \USaq\Provider\MiddlewareProvider::class,
-    \USaq\Provider\UserServicesProvider::class
-]);
+$serviceManager = new ServiceProviderManager();
+
+$serviceProviders = [
+    new \USaq\Provider\ApplicationServicesProvider(),
+    new \USaq\Provider\PersistenceProvider(),
+    new \USaq\Provider\MiddlewareProvider(),
+    new \USaq\Provider\UserServicesProvider()
+];
+
+$serviceManager->addServiceProviders($serviceProviders);
 
 // Instantiate the app
-$app = new Application();
+$app = new Application($serviceManager);
 
 /* *********************************************** */
 /* *        Register Global Middlewares          * */
 /* *********************************************** */
 // Register global application middlewares
 // Acts as LIFO queue, last added midleware is processed first
-$app->registerMiddlewares([
-    \Tuupola\Middleware\Cors::class,
-    \Gofabian\Negotiation\NegotiationMiddleware::class
-]);
+$app->add(\Tuupola\Middleware\Cors::class);
+$app->add(\Gofabian\Negotiation\NegotiationMiddleware::class);
 
 /* *********************************************** */
 /* *               Register Routes               * */
 /* *********************************************** */
-// Register routes
-//$app->registerRoutes([
-//    \USaq\Routes\UserRoutes::class
-//]);
-
-// Register routes on /api urls
-$app->registerApiRoutes([
-    \USaq\Routes\Api\UserRoutes::class,
-    \USaq\Routes\Api\UtilsRoutes::class
-]);
+include __DIR__ . '/../routes/api.routes.php';
 
 // Prepare Static Proxies
 StaticProxy::setStaticProxyApplication($app);

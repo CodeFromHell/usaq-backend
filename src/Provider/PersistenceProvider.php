@@ -10,6 +10,7 @@ use function DI\env;
 use function DI\get;
 use function DI\object;
 use function DI\string;
+use USaq\App\ServiceProvider\ServiceProviderInterface;
 
 /**
  * Provide configuration for Doctrine service.

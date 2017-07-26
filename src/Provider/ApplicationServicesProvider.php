@@ -11,6 +11,7 @@ use Monolog\Logger;
 use Monolog\Processor\PsrLogMessageProcessor;
 use Psr\Container\ContainerInterface;
 use Psr\Log\LoggerInterface;
+use USaq\App\ServiceProvider\ServiceProviderInterface;
 use USaq\Templating\EngineInterface;
 use USaq\Templating\Fractal\FractalEngine;
 

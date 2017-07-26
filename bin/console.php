@@ -21,9 +21,9 @@ try {
 $input = new \Symfony\Component\Console\Input\ArgvInput($argv);
 $output = new \Symfony\Component\Console\Output\ConsoleOutput();
 
-$container = require __DIR__ . '/container/container.php';
+$container = require __DIR__ . '/../config/container/container.php';
 
-$config = Robo::createConfiguration([ __DIR__ . '/../config/console.yml']);
+$config = Robo::createConfiguration([__DIR__ . '/../config/console.yml']);
 $app = new ApplicationConsole($config, $input, $output, $container);
 $status_code = $app->run($input, $output);
 exit($status_code);
