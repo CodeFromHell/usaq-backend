@@ -21,16 +21,6 @@ class SettingsProvider implements ServiceProviderInterface
     public function registerServices(): array
     {
         return [
-            'dir.base' => __DIR__ . '/../usaq-backend',
-            'dir.cache' => string('{dir.base}/cache'),
-            'dir.config' => string('{dir.base}/config'),
-            'dir.docs' => string('{dir.base}/docs'),
-            'dir.src' => string('{dir.base}/src'),
-            'dir.src.entities' => string('{dir.src}/Model/Entity'),
-            'dir.storage' => string('{dir.base}/var'),
-            'dir.database' => string('{dir.storage}/database'),
-            'dir.logs' => string('{dir.storage}/logs'),
-
             'settings.determineRouteBeforeAppMiddleware' => true,
             'settings.displayErrorDetails' => false,
 
