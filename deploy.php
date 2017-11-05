@@ -8,6 +8,9 @@ require 'recipe/common.php';
 set('repository', 'https://github.com/CodeFromHell/usaq-backend.git');
 set('git_tty', false); // [Optional] Allocate tty for git on first deployment
 
+set('keep_releases', 2);
+set('ssh_multiplexing', false);
+
 // Dirs
 set('shared_dirs', [
     'storage'
@@ -28,15 +31,6 @@ host('solus-dev')
     ->set('branch', 'development')
     ->configFile('~/.ssh/config');
 
-host('solus-prod')
-    ->hostname('solus')
-    ->stage('production')
-    ->roles('app')
-    ->set('deploy_path', '~/applications/usaq/production')
-    ->set('branch', 'master')
-    ->configFile('~/.ssh/config');
-
-
 // Tasks
 desc('Restart PHP-FPM service');
 task('php-fpm:restart', function () {
@@ -44,13 +38,13 @@ task('php-fpm:restart', function () {
     // /etc/sudoers: username ALL=NOPASSWD:/bin/systemctl restart php-fpm.service
     run('sudo systemctl restart php-fpm.service');
 });
-//after('deploy:symlink', 'php-fpm:restart');
+after('deploy:symlink', 'php-fpm:restart');
 
 desc('Run migrations');
 task('deploy:run_migrations',function () {
     run('cd {{release_path}} && {{bin/php}} ./app/console.php database:migrate');
 });
-after('deploy:clear_paths', 'deploy:run_migrations');
+//after('deploy:clear_paths', 'deploy:run_migrations');
 
 desc('Deploy your project');
 task('deploy', [
