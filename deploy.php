@@ -13,7 +13,8 @@ set('ssh_multiplexing', false);
 
 // Dirs
 set('shared_dirs', [
-    'var/database'
+    'var/database',
+    'var/logs'
 ]);
 
 set('shared_files', [
