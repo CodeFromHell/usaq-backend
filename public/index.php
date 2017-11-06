@@ -10,7 +10,7 @@ if (PHP_SAPI === 'cli-server' && $_SERVER['SCRIPT_FILENAME'] !== __FILE__) {
 
 // Bootstrap app
 /** @var \Slim\App $app */
-$app = require __DIR__ . '/../app/bootstrap.php';
+$app = require __DIR__ . '/../config/bootstrap.php';
 
 // Run!
 $app->run();

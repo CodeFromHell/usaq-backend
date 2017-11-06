@@ -13,7 +13,7 @@ set('ssh_multiplexing', false);
 
 // Dirs
 set('shared_dirs', [
-    'storage'
+    'var'
 ]);
 
 set('shared_files', [
