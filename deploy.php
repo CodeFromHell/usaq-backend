@@ -38,7 +38,7 @@ task('php-fpm:restart', function () {
     // /etc/sudoers: username ALL=NOPASSWD:/bin/systemctl restart php-fpm.service
     run('sudo systemctl restart php-fpm.service');
 });
-after('deploy:symlink', 'php-fpm:restart');
+//after('deploy:symlink', 'php-fpm:restart');
 
 desc('Run migrations');
 task('deploy:run_migrations',function () {
